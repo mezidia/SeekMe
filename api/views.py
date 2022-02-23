@@ -20,31 +20,35 @@ def get_routes(request):
     return Response(routes)
 
 
-class OrderList(APIView):
+@api_view(['GET', 'POST'])
+def order_list(request):
     """
-    List all orders, or create a new order.
+    List all code order, or create a new order.
     """
-    def get(self, request):
+    if request.method == 'GET':
         pass
 
-    def post(self, request):
+    elif request.method == 'POST':
         pass
 
 
-class OrderDetail(APIView):
+@api_view(['GET', 'PUT', 'DELETE'])
+def order_detail(request, pk):
     """
-    Retrieve, update or delete an order instance.
+    Retrieve, update or delete an order.
     """
-    def get_object(self, pk):
+    try:
+        pass
+    except:
         pass
 
-    def get(self, request, pk):
+    if request.method == 'GET':
         pass
 
-    def put(self, request, pk):
+    elif request.method == 'PUT':
         pass
 
-    def delete(self, request, pk):
+    elif request.method == 'DELETE':
         pass
 
 
