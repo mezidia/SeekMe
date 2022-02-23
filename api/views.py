@@ -23,7 +23,7 @@ def get_routes(request):
 @api_view(['GET', 'POST'])
 def order_list(request):
     """
-    List all code order, or create a new order.
+    List all orders, or create a new order.
     """
     if request.method == 'GET':
         pass
@@ -52,31 +52,33 @@ def order_detail(request, pk):
         pass
 
 
-class FlightList(mixins.ListModelMixin,
-                  mixins.CreateModelMixin,
-                  generics.GenericAPIView):
-    queryset = ...
-    serializer_class = FlightSerializer
+@api_view(['GET', 'POST'])
+def flight_list(request):
+    """
+    List all flights, or create a new flight.
+    """
+    if request.method == 'GET':
+        pass
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+    elif request.method == 'POST':
+        pass
 
 
-class FlightDetail(mixins.RetrieveModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.DestroyModelMixin,
-                    generics.GenericAPIView):
-    queryset = ...
-    serializer_class = FlightSerializer
+@api_view(['GET', 'PUT', 'DELETE'])
+def flight_detail(request, pk):
+    """
+    Retrieve, update or delete a flight.
+    """
+    try:
+        pass
+    except:
+        pass
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
+    if request.method == 'GET':
+        pass
 
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+    elif request.method == 'PUT':
+        pass
 
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+    elif request.method == 'DELETE':
+        pass
