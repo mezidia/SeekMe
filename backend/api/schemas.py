@@ -9,7 +9,6 @@ class PostBase(BaseModel):
 
 
 class Post(PostBase):
-    id: str
 
     class Config:
         orm_mode = True
