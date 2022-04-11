@@ -5,4 +5,7 @@ from database import Base
 
 
 class PostModel(Base):
-    pass
+    __tablename__ = "post"
+
+    name = Column(String, primary_key=True, nullable=False)
+    description = Column(String, nullable=False)
