@@ -2,7 +2,8 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
 from database import get_db, engine
-import schemas, crud, models
+from crud import PostCrud
+import schemas, models
 
 app = FastAPI()
 
@@ -13,5 +14,5 @@ async def db_set_up():
 
 @app.get("/posts", response_model=list[schemas.Post])
 def read_users(db: Session = Depends(get_db)):
-    posts = crud.get_users(db)
+    posts = PostCrud.get_users(db)
     return posts
