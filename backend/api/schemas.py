@@ -21,12 +21,12 @@ class Post(PostBase):
 
 
 class UserBase(BaseModel):
+    name: str
     email: str
+    phone_number: str
 
 
 class UserCreate(UserBase):
-    name: str
-    phone_number: str
     password: str
 
 
