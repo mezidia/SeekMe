@@ -4,18 +4,18 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 
-class PostModel(Base):
+class Post(Base):
     __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True, nullable=False, index=True)
-    name = Column(String, primary_key=True, nullable=False)
+    title = Column(String, primary_key=True, nullable=False)
     description = Column(String, nullable=False)
-    user_id = Column(Integer, ForeignKey("users.id"))
+    owner_id = Column(Integer, ForeignKey("users.id"))
 
-    creator = relationship("UserModel", back_populates="posts")
+    creator = relationship("User", back_populates="posts")
 
 
-class UserModel(Base):
+class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, nullable=False, index=True)
@@ -24,4 +24,4 @@ class UserModel(Base):
     password = Column(String, nullable=False)
     phone_number = Column(String, nullable=False)
 
-    posts = relationship("PostModel", back_populates="creator")
+    posts = relationship("Post", back_populates="creator")

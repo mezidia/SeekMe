@@ -3,8 +3,10 @@ from sqlalchemy.orm import Session
 import models
 
 
-class PostCrud:
-    def get_users(db: Session):
-        return db.query(models.PostModel).all()
+def get_post(id: int, db: Session):
+    return db.query(models.Post).filter(models.Post.id == id).first()
 
-        
+def get_posts(db: Session):
+    return db.query(models.Post).all()
+
+
