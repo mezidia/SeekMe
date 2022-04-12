@@ -8,5 +8,3 @@ def get_user(id: int, db: Session):
 
 def get_users(db: Session):
     return db.query(models.User).all()
-
-
