@@ -12,7 +12,7 @@ async def db_set_up():
     models.Base.metadata.create_all(engine)
 
 
-@app.get("/posts", response_model=list[schemas.Post])
+@app.get("/posts", response_model=list[schemas.PostResponse])
 def read_users(db: Session = Depends(get_db)):
     posts = PostCrud.get_users(db)
     return posts

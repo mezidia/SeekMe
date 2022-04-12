@@ -12,7 +12,7 @@ class PostModel(Base):
     description = Column(String, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"))
 
-    creator = relationship("User", back_populates="heroes")
+    creator = relationship("UserModel", back_populates="posts")
 
 
 class UserModel(Base):
@@ -24,4 +24,4 @@ class UserModel(Base):
     password = Column(String, nullable=False)
     phone_number = Column(String, nullable=False)
 
-    posts = relationship("Hero", back_populates="creator")
+    posts = relationship("PostModel", back_populates="creator")

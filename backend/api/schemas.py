@@ -1,15 +1,21 @@
-from typing import List, Optional
-
 from pydantic import BaseModel
 
 
-class PostBase(BaseModel):
+class UserResponse(BaseModel):
+    id: int
+    name: str
+    email: str
+    phone_number: str
+
+    class Config:
+        orm_mode = True
+
+
+class PostResponse(BaseModel):
+    id: int
     name: str
     description: str
-
-
-class Post(PostBase):
-    id: int
+    creator: UserResponse
 
     class Config:
         orm_mode = True
