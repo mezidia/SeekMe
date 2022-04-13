@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import RegLogin from "./RegLogin";
 import UserHeader from "./UserHeader";
 
@@ -14,9 +15,9 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          SeekMe
-        </a>
+        <Link href="/">
+          <a className="navbar-brand">SeekMe</a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
