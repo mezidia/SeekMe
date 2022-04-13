@@ -10,7 +10,7 @@ def get_post_by_id(id: int, db: Session) -> Query:
     :param id: id of post to get.
     :param db: database session.
     :return: first result of session query or None if the result doesn't contain any row.
-    """ 
+    """
 
     return db.query(models.Post).filter(models.Post.id == id).first()
 
@@ -21,7 +21,7 @@ def get_all_posts(db: Session) -> list:
 
     :param db: database session.
     :return: results represented by session query as a list.
-    """ 
+    """
 
     return db.query(models.Post).all()
 
@@ -34,7 +34,7 @@ def create_post(user_id: int, post: schemas.PostCreate, db: Session) -> models.P
     :param post: pydantic post creation schema.
     :param db: database session.
     :return: created post object.
-    """ 
+    """
 
     db_post = models.Post(**post.dict(), owner_id=user_id)
 
@@ -53,7 +53,7 @@ def update_post(id: id, post: schemas.PostBase, db: Session) -> None:
     :param post: pydantic base post schema.
     :param db: database session.
     :return: None.
-    """ 
+    """
 
     db_post = db.query(models.Post).filter(models.Post.id == id)
 
@@ -74,7 +74,7 @@ def delete_post(id: id, db: Session) -> None:
     :param id: id of post to delete.
     :param db: database session.
     :return: None.
-    """ 
+    """
 
     db_post = db.query(models.Post).filter(models.Post.id == id)
 

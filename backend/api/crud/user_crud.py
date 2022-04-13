@@ -11,7 +11,7 @@ def get_user_by_id(id: int, db: Session) -> Query:
     :param id: id of user to get.
     :param db: database session.
     :return: first result of session query or None if the result doesn't contain any row.
-    """ 
+    """
 
     return db.query(models.User).filter(models.User.id == id).first()
 
@@ -23,7 +23,7 @@ def get_user_by_email(email: str, db: Session) -> Query:
     :param email: email of user to get.
     :param db: database session.
     :return: first result of session query or None if the result doesn't contain any row.
-    """ 
+    """
 
     return db.query(models.User).filter(models.User.email == email).first()
 
@@ -34,7 +34,7 @@ def get_all_users(db: Session) -> list:
 
     :param db: database session.
     :return: results represented by session query as a list.
-    """ 
+    """
 
     return db.query(models.User).all()
 
@@ -46,7 +46,7 @@ def create_user(user: schemas.UserCreate, db: Session) -> models.User:
     :param user: pydantic user creation schema.
     :param db: database session.
     :return: created user object.
-    """ 
+    """
 
     db_user = models.User(**user.dict())
     hashed_pwd = Hash.bcrypt(db_user.password)
@@ -67,7 +67,7 @@ def update_user(id: id, user: schemas.UserBase, db: Session) -> None:
     :param user: pydantic base user schema.
     :param db: database session.
     :return: None.
-    """ 
+    """
 
     db_user = db.query(models.User).filter(models.User.id == id)
 
@@ -89,7 +89,7 @@ def delete_user(id: id, db: Session) -> None:
     :param id: id of user to delete.
     :param db: database session.
     :return: None.
-    """ 
+    """
 
     db_user = db.query(models.User).filter(models.User.id == id)
 
@@ -105,7 +105,7 @@ def authenticate_user(email: str, password: str, db: Session) -> Query:
     :param password: password of user to authenticate.
     :param db: database session.
     :return: first result of session query or False if the result doesn't contain any row or password is incorrect.
-    """ 
+    """
 
     user = get_user_by_email(email, db)
     if not user:

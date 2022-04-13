@@ -10,8 +10,8 @@ class Hash:
 
         :param password: password to be hashed.
         :return: hashed password.
-        """ 
-        
+        """
+
         return pwd_context.hash(password)
 
     def verify(plain_password: str, hashed_password: str) -> bool:
@@ -21,6 +21,6 @@ class Hash:
         :param plain_password: not hashed password.
         :param hashed_password: hashed password.
         :return: True if the password match, False if not.
-        """ 
+        """
 
         return pwd_context.verify(plain_password, hashed_password)

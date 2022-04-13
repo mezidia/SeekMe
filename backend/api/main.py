@@ -7,9 +7,11 @@ import models
 
 app = FastAPI()
 
+
 @app.on_event("startup")
 async def db_set_up():
     models.Base.metadata.create_all(engine)
+
 
 app.include_router(user.router)
 app.include_router(auth.router)
