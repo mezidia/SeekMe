@@ -1,18 +1,42 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, Query
 
 import models, schemas
 
 
-def get_post_by_id(id: int, db: Session):
+def get_post_by_id(id: int, db: Session) -> Query:
+    """
+    get_post_by_id takes the post from database by its id.
+
+    :param id: id of post to get.
+    :param db: database session.
+    :return: first result of session query or None if the result doesn't contain any row.
+    """ 
+
     return db.query(models.Post).filter(models.Post.id == id).first()
 
 
-def get_posts(db: Session):
+def get_all_posts(db: Session) -> list:
+    """
+    get_all_posts takes all posts from database.
+
+    :param db: database session.
+    :return: results represented by session query as a list.
+    """ 
+
     return db.query(models.Post).all()
 
 
-def create_post(user_id: int, post: schemas.PostCreate, db: Session):
-    db_post = models.Item(**post.dict(), owner_id=user_id)
+def create_post(user_id: int, post: schemas.PostCreate, db: Session) -> models.Post:
+    """
+    create_post creates user's new post in database.
+
+    :param user_id: id of the user who creates the post.
+    :param post: pydantic post creation schema.
+    :param db: database session.
+    :return: created post object.
+    """ 
+
+    db_post = models.Post(**post.dict(), owner_id=user_id)
 
     db.add(db_post)
     db.commit()
@@ -21,10 +45,19 @@ def create_post(user_id: int, post: schemas.PostCreate, db: Session):
     return db_post
 
 
-def update_post(id: id, post: schemas.PostBase, db: Session) -> dict:
-    db_user = db.query(models.User).filter(models.User.id == id)
+def update_post(id: id, post: schemas.PostBase, db: Session) -> None:
+    """
+    update_post updates post value fields in database by its id.
 
-    db_user.update(
+    :param id: id of post to update.
+    :param post: pydantic base post schema.
+    :param db: database session.
+    :return: None.
+    """ 
+
+    db_post = db.query(models.Post).filter(models.Post.id == id)
+
+    db_post.update(
         {
             "title": post.title,
             "description": post.description,
@@ -34,7 +67,15 @@ def update_post(id: id, post: schemas.PostBase, db: Session) -> dict:
     db.commit()
 
 
-def delete_post(id: id, db: Session):
+def delete_post(id: id, db: Session) -> None:
+    """
+    delete_post removes post from database by his id.
+
+    :param id: id of post to delete.
+    :param db: database session.
+    :return: None.
+    """ 
+
     db_post = db.query(models.Post).filter(models.Post.id == id)
 
     db_post.delete(synchronize_session=False)

@@ -6,7 +6,7 @@ import models, schemas
 
 def get_user_by_id(id: int, db: Session) -> Query:
     """
-    get_user_by_id takes the use from database by his id.
+    get_user_by_id takes the user from database by his id.
 
     :param id: id of user to get.
     :param db: database session.
@@ -18,7 +18,7 @@ def get_user_by_id(id: int, db: Session) -> Query:
 
 def get_user_by_email(email: str, db: Session) -> Query:
     """
-    get_user_by_email takes the use from database by his email.
+    get_user_by_email takes the user from database by his email.
 
     :param email: email of user to get.
     :param db: database session.
