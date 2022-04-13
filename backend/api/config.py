@@ -1,14 +1,14 @@
-# from pydantic import BaseSettings
+from pydantic import BaseSettings
 
 
-# class Settings(BaseSettings):
-#     database_hostname: str
-#     database_username: str
-#     database_password: str
-#     database_name: str
+class Settings(BaseSettings):
+    # database_hostname: str
+    # database_username: str
+    # database_password: str
+    # database_name: str
 
-#     class Config:
-#         env_file = "../.env"
+    class Config:
+        env_file = "../.env"
 
 
-# settings = Settings()
+settings = Settings()
