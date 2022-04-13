@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 
+from hashing import Hash
 import models, schemas
 
 
@@ -13,13 +14,10 @@ def get_all_users(db: Session):
     return db.query(models.User).all()
 
 def create_user(user: schemas.UserCreate, db: Session):
-    fake_hashed_password = user.password + "notreallyhashed"
-    db_user = models.User(
-        name=user.name,
-        email=user.email,
-        phone_number=user.phone_number, 
-        password=fake_hashed_password
-    )
+    db_user = models.User(**user.dict())
+    hashed_pwd = Hash.bcrypt(db_user.password)
+    db_user.password = hashed_pwd
+
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
