@@ -6,6 +6,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from config import settings
+from crud import user_crud
 import schemas, database, models
 
 
@@ -29,8 +30,9 @@ def create_access_token(data: dict):
 
 def verify_access_token(token: str, credentials_exception):
     try:
+        print(token)
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        id: str = payload.get("user_id")
+        id = payload.get("sub")
         if id is None:
             raise credentials_exception
         token_data = schemas.TokenData(id=id)
@@ -50,6 +52,6 @@ def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
     token = verify_access_token(token, credentials_exception)
-    user = db.query(models.User).filter(models.User.id == token.id).first()
+    user = user_crud.get_user_by_id(token.id, db)
 
     return user

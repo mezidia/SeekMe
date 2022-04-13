@@ -1,12 +1,9 @@
-from datetime import timedelta
-
 from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from crud import user_crud
 from database import get_db
-from config import settings
 from oauth2 import create_access_token
 import schemas
 
@@ -25,5 +22,5 @@ async def login_for_access_token(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token = create_access_token(data={"sub": user.email})
+    access_token = create_access_token(data={"sub": user.id})
     return {"access_token": access_token, "token_type": "bearer"}

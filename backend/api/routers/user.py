@@ -3,9 +3,15 @@ from sqlalchemy.orm import Session
 
 from database import get_db
 from crud import user_crud
+from oauth2 import get_current_user
 import schemas
 
 router = APIRouter(prefix="/users", tags=["users"])
+
+
+@router.get("/me", response_model=schemas.User)
+async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
+    return current_user
 
 
 @router.get("/{id}", status_code=200, response_model=schemas.User)
