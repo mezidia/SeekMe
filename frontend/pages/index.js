@@ -1,5 +1,4 @@
-import Head from "next/head";
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home({ posts }) {
   return (
@@ -7,7 +6,10 @@ export default function Home({ posts }) {
       <ul>
         {posts.map((post) => (
           <li key={post.id}>
-            {post.id}. {post.title}
+            {post.id}. {post.title}, Author:{" "}
+            <Link href={`/user/${post.userId}`}>
+              <a>Author posts</a>
+            </Link>
           </li>
         ))}
       </ul>
