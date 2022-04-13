@@ -36,4 +36,8 @@ def update_user(id: id, user: schemas.UserBase, db: Session) -> dict:
     )
     db.commit()
 
-    return db_user
+def delete_user(id: id, db: Session):
+    db_user = db.query(models.User).filter(models.User.id == id)
+
+    db_user.delete(synchronize_session=False)
+    db.commit()
