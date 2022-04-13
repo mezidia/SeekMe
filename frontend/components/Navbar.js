@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import RegLogin from "./RegLogin";
+import UserHeader from "./UserHeader";
 
 export default function Navbar() {
   const [token, setToken] = useState(undefined);
@@ -24,24 +26,12 @@ export default function Navbar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        {token ? (
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="#">
-                  Реєстрація
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Вхід
-                </a>
-              </li>
-            </ul>
-          </div>
-        ) : (
-          ""
-        )}
+
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {!token ? <RegLogin /> : <UserHeader />}
+          </ul>
+        </div>
       </div>
     </nav>
   );
