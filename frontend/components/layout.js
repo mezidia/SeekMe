@@ -4,7 +4,7 @@ import Head from "next/head";
 
 export default function Layout({ children }) {
   return (
-    <div className="container">
+    <>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="title" content="" />
@@ -16,8 +16,8 @@ export default function Layout({ children }) {
         <title>SeekMe</title>
       </Head>
       <Navbar />
-      <main>{children}</main>
+      <div className="container-fluid">{children}</div>
       <Footer />
-    </div>
+    </>
   );
 }
