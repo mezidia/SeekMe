@@ -1,16 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
-from database import get_db, engine
+from database import get_db
 from crud import user_crud
-import schemas, models
+import schemas
 
 router = APIRouter(prefix="/users", tags=["users"])
-
-
-@router.on_event("startup")
-async def db_set_up():
-    models.Base.metadata.create_all(engine)
 
 
 @router.get("/{id}", status_code=200, response_model=schemas.User)
