@@ -10,6 +10,7 @@ class Post(Base):
     id = Column(Integer, primary_key=True, nullable=False, index=True)
     title = Column(String, primary_key=True, nullable=False)
     description = Column(String, nullable=False)
+    image = Column(String)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     creator = relationship("User", back_populates="posts")
