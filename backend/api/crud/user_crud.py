@@ -95,3 +95,21 @@ def delete_user(id: id, db: Session) -> None:
 
     db_user.delete(synchronize_session=False)
     db.commit()
+
+
+def authenticate_user(email: str, password: str, db: Session) -> Query:
+    """
+    authenticate_user checks user data and authorizes him.
+
+    :param email: email of user to authenticate.
+    :param password: password of user to authenticate.
+    :param db: database session.
+    :return: first result of session query or False if the result doesn't contain any row or password is incorrect.
+    """ 
+
+    user = get_user_by_email(email, db)
+    if not user:
+        return False
+    if not Hash.verify_password(password, user.password):
+        return False
+    return user
