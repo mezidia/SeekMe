@@ -110,6 +110,6 @@ def authenticate_user(email: str, password: str, db: Session) -> Query:
     user = get_user_by_email(email, db)
     if not user:
         return False
-    if not Hash.verify_password(password, user.password):
+    if not Hash.verify(password, user.password):
         return False
     return user
