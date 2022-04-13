@@ -21,6 +21,7 @@ def create_user(user: schemas.UserCreate, db: Session):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+
     return db_user
 
 def update_user(id: id, user: schemas.UserBase, db: Session) -> dict:
