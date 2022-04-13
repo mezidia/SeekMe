@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import RegLogin from "./RegLogin";
 import UserHeader from "./UserHeader";
 
 export default function Navbar() {
+  const router = useRouter();
   const [token, setToken] = useState(undefined);
 
   useEffect(() => {
     setToken(localStorage.token);
-  }, [token]);
+  }, [token, router.asPath]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -29,7 +31,7 @@ export default function Navbar() {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            {!token ? <RegLogin /> : <UserHeader />}
+            {!token ? <RegLogin /> : <UserHeader setToken={setToken} />}
           </ul>
         </div>
       </div>
