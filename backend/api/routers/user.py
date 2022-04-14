@@ -31,3 +31,11 @@ def get_users(db: Session = Depends(get_db)):
     users = user_crud.get_all_users(db)
 
     return users
+
+
+@router.post("/create/", status_code=201, response_model=schemas.User)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    db_user = user_crud.get_user_by_email(user.email, db)
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    return user_crud.create_user(user, db)
