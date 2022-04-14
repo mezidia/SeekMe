@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -9,8 +9,15 @@ import schemas
 router = APIRouter(prefix="/posts", tags=["posts"])
 
 
-@router.get("/{id}", status_code=200, response_model=schemas.Post)
+@router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.Post)
 def get_post(id: int, db: Session = Depends(get_db)):
+    """
+    get_post_by_id takes the post via post_crud by its id.
+
+    :param id: id of post to get.
+    :param status_code: return code of operation.
+    :return: post info or raise exception with 404 code.
+    """
     post = post_crud.get_post_by_id(id, db)
     if post is None:
         raise HTTPException(
