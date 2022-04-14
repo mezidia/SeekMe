@@ -34,31 +34,33 @@ def create_post(post: schemas.PostCreate, db: Session = Depends(get_db),current_
 
 
 @router.put("/update/{id}", status_code=200)
-def update_user(
+def update_post(
     id: int,
-    user: schemas.UserBase,
+    post: schemas.PostBase,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(get_current_user),
 ):
-    if current_user.id != id:
+    db_post = post_crud.get_post_by_id(id, db)
+    if current_user.id != db_post.owner_id:
         raise HTTPException(
             status_code=403, detail=f"This operation is not allowed without log in"
         )
-    post_crud.update_user(id, user, db)
+    post_crud.update_post(id, post, db)
 
-    return {"detail": f"user with id {id} was updated"}
+    return {"detail": f"post with id {id} was updated"}
 
 
 @router.delete("/delete/{id}", status_code=404)
-def delete_user(
+def delete_post(
     id: int,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(get_current_user),
 ):
-    if current_user.id != id:
+    db_post = post_crud.get_post_by_id(id, db)
+    if current_user.id != db_post.owner_id:
         raise HTTPException(
             status_code=403, detail=f"This operation is not allowed without log in"
         )
-    post_crud.delete_user(id, db)
+    post_crud.delete_post(id, db)
 
     return Response(status_code=404)
