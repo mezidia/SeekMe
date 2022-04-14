@@ -2,11 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
 from database import get_db
-from crud import user_crud
+from crud import post_crud
 from oauth2 import get_current_user
 import schemas
 
-router = APIRouter(prefix="/users", tags=["users"])
+router = APIRouter(prefix="/posts", tags=["posts"])
 
 
 @router.get("/me", response_model=schemas.User)
