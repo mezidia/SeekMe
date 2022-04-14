@@ -21,14 +21,14 @@ def get_post(id: int, db: Session = Depends(get_db)):
     post = post_crud.get_post_by_id(id, db)
     if post is None:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Post with id {id} was not found",
         )
 
     return post
 
 
-@router.get("/", status_code=200, response_model=list[schemas.Post])
+@router.get("/", status_code=status.HTTP_200_OK, response_model=list[schemas.Post])
 def get_posts(db: Session = Depends(get_db)):
     """
     get_posts takes all posts via post_crud.
@@ -41,7 +41,7 @@ def get_posts(db: Session = Depends(get_db)):
     return posts
 
 
-@router.post("/create/", status_code=201, response_model=schemas.Post)
+@router.post("/create/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
 def create_post(post: schemas.PostCreate, db: Session = Depends(get_db),current_user: schemas.User = Depends(get_current_user)):
     """
     create_post creates the post via post_crud.
@@ -54,7 +54,7 @@ def create_post(post: schemas.PostCreate, db: Session = Depends(get_db),current_
     return post_crud.create_post(current_user.id, post, db)
 
 
-@router.put("/update/{id}", status_code=200)
+@router.put("/update/{id}", status_code=status.HTTP_200_OK)
 def update_post(
     id: int,
     post: schemas.PostBase,
@@ -73,14 +73,14 @@ def update_post(
     db_post = post_crud.get_post_by_id(id, db)
     if current_user.id != db_post.owner_id:
         raise HTTPException(
-            status_code=403, detail=f"This operation is not allowed without log in"
+            status_code=status.HTTP_403_FORBIDDEN, detail=f"This operation is not allowed without log in"
         )
     post_crud.update_post(id, post, db)
 
     return {"detail": f"post with id {id} was updated"}
 
 
-@router.delete("/delete/{id}", status_code=404)
+@router.delete("/delete/{id}", status_code=status.HTTP_404_NOT_FOUND)
 def delete_post(
     id: int,
     db: Session = Depends(get_db),
@@ -97,8 +97,8 @@ def delete_post(
     db_post = post_crud.get_post_by_id(id, db)
     if current_user.id != db_post.owner_id:
         raise HTTPException(
-            status_code=403, detail=f"This operation is not allowed without log in"
+            status_code=status.HTTP_403_FORBIDDEN, detail=f"This operation is not allowed without log in"
         )
     post_crud.delete_post(id, db)
 
-    return Response(status_code=404)
+    return Response(status_code=status.HTTP_404_NOT_FOUND)
