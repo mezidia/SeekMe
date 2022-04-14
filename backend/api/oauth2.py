@@ -59,8 +59,7 @@ def verify_access_token(token: str, credentials_exception) -> schemas.TokenData:
 
 
 def get_current_user(
-    token: str = Depends(oauth2_scheme), 
-    db: Session = Depends(database.get_db)
+    token: str = Depends(oauth2_scheme), db: Session = Depends(database.get_db)
 ):
     """
     get_current_user returns the user object that is currently logged in.
@@ -78,5 +77,3 @@ def get_current_user(
     user = user_crud.get_user_by_id(token.id, db)
 
     return user
-
-
