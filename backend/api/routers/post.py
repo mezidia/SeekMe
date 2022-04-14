@@ -30,6 +30,13 @@ def get_post(id: int, db: Session = Depends(get_db)):
 
 @router.get("/", status_code=200, response_model=list[schemas.Post])
 def get_posts(db: Session = Depends(get_db)):
+    """
+    get_posts takes all post via post_crud.
+
+    :param db: database session.
+    :param status_code: return code of operation.
+    :return: all posts.
+    """
     posts = post_crud.get_all_posts(db)
 
     return posts
