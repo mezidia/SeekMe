@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -20,7 +20,7 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
     return current_user
 
 
-@router.get("/{id}", status_code=200, response_model=schemas.User)
+@router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.User)
 def get_user(id: int, db: Session = Depends(get_db)):
     """
     get_user gets the user by id via user_crud.
@@ -32,14 +32,14 @@ def get_user(id: int, db: Session = Depends(get_db)):
     user = user_crud.get_user_by_id(id, db)
     if user is None:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail=f"User with id {id} was not found",
         )
 
     return user
 
 
-@router.get("/", status_code=200, response_model=list[schemas.User])
+@router.get("/", status_code=status.HTTP_200_OK, response_model=list[schemas.User])
 def get_users(db: Session = Depends(get_db)):
     """
     get_users gets all users via user_crud.
@@ -52,7 +52,7 @@ def get_users(db: Session = Depends(get_db)):
     return users
 
 
-@router.post("/create/", status_code=201, response_model=schemas.User)
+@router.post("/create/", status_code=status.HTTP_201_CREATED, response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     """
     create_user creates the user via user_crud.
@@ -63,12 +63,12 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     """
     db_user = user_crud.get_user_by_email(user.email, db)
     if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
 
     return user_crud.create_user(user, db)
 
 
-@router.put("/update/{id}", status_code=200)
+@router.put("/update/{id}", status_code=status.HTTP_200_OK)
 def update_user(
     id: int,
     user: schemas.UserBase,
@@ -86,14 +86,14 @@ def update_user(
     """
     if current_user.id != id:
         raise HTTPException(
-            status_code=403, detail=f"This operation is not allowed without log in"
+            status_code=status.HTTP_403_FORBIDDEN, detail=f"This operation is not allowed without log in"
         )
     user_crud.update_user(id, user, db)
 
     return {"detail": f"user with id {id} was updated"}
 
 
-@router.delete("/delete/{id}", status_code=404)
+@router.delete("/delete/{id}", status_code=status.HTTP_404_NOT_FOUND)
 def delete_user(
     id: int,
     db: Session = Depends(get_db),
@@ -109,8 +109,8 @@ def delete_user(
     """
     if current_user.id != id:
         raise HTTPException(
-            status_code=403, detail=f"This operation is not allowed without log in"
+            status_code=status.HTTP_403_FORBIDDEN, detail=f"This operation is not allowed without log in"
         )
     user_crud.delete_user(id, db)
 
-    return Response(status_code=404)
+    return Response(status_code=status.HTTP_404_NOT_FOUND)
