@@ -4,7 +4,8 @@ from pydantic import BaseModel
 
 
 class PostBase(BaseModel):
-    title: str
+    full_name: str
+    last_place: str
     description: str
     image: str
 

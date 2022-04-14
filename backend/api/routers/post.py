@@ -41,6 +41,19 @@ def get_posts(db: Session = Depends(get_db)):
     return posts
 
 
+@router.get("/search/{query}", status_code=status.HTTP_200_OK, response_model=list[schemas.Post])
+def get_posts(query: str, db: Session = Depends(get_db)):
+    """
+    get_posts takes all posts via post_crud.
+
+    :param db: database session.
+    :return: all posts.
+    """
+    posts = post_crud.get_posts_by_query(query, db)
+
+    return posts
+
+
 @router.post("/create/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
 def create_post(post: schemas.PostCreate, db: Session = Depends(get_db),current_user: schemas.User = Depends(get_current_user)):
     """

@@ -8,7 +8,8 @@ class Post(Base):
     __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True, nullable=False, index=True)
-    title = Column(String, nullable=False)
+    full_name = Column(String, nullable=False)
+    last_place = Column(String, nullable=False)
     description = Column(String, nullable=False)
     image = Column(String)
     owner_id = Column(Integer, ForeignKey("users.id"))

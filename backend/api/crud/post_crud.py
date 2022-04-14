@@ -15,6 +15,25 @@ def get_post_by_id(id: int, db: Session) -> Query:
     return db.query(models.Post).filter(models.Post.id == id).first()
 
 
+def get_posts_by_query(q: str, db: Session) -> list:
+    """
+    get_post_by_id takes the post from database by its id.
+
+    :param id: id of post to get.
+    :param db: database session.
+    :return: first result of session query or None if the result doesn't contain any row.
+    """
+
+    posts = db.query(models.Post).all()
+    queried_posts = []
+
+    for post in posts:
+        if q in post.full_name or q in post.last_place or q in post.description:
+            queried_posts.append(post)
+
+    return queried_posts
+
+
 def get_all_posts(db: Session) -> list:
     """
     get_all_posts takes all posts from database.
