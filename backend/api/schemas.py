@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 
 class PostBase(BaseModel):
-    id: int
     title: str
     description: str
     image: str
@@ -16,6 +15,7 @@ class PostCreate(PostBase):
 
 class Post(PostBase):
     owner_id: int
+    id: int
 
     class Config:
         orm_mode = True
