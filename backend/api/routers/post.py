@@ -21,11 +21,11 @@ def get_post(id: int, db: Session = Depends(get_db)):
     return post
 
 
-@router.get("/", status_code=200, response_model=list[schemas.User])
-def get_users(db: Session = Depends(get_db)):
-    users = post_crud.get_all_users(db)
+@router.get("/", status_code=200, response_model=list[schemas.Post])
+def get_posts(db: Session = Depends(get_db)):
+    posts = post_crud.get_all_posts(db)
 
-    return users
+    return posts
 
 
 @router.post("/create/", status_code=201, response_model=schemas.User)
