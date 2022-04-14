@@ -41,6 +41,12 @@ def get_user(id: int, db: Session = Depends(get_db)):
 
 @router.get("/", status_code=200, response_model=list[schemas.User])
 def get_users(db: Session = Depends(get_db)):
+    """
+    get_users gets all users via user_crud.
+
+    :param db: database session.
+    :return: all users.
+    """
     users = user_crud.get_all_users(db)
 
     return users
