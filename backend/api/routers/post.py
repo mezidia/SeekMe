@@ -9,16 +9,16 @@ import schemas
 router = APIRouter(prefix="/posts", tags=["posts"])
 
 
-@router.get("/{id}", status_code=200, response_model=schemas.User)
-def get_user(id: int, db: Session = Depends(get_db)):
-    user = post_crud.get_user_by_id(id, db)
-    if user is None:
+@router.get("/{id}", status_code=200, response_model=schemas.Post)
+def get_post(id: int, db: Session = Depends(get_db)):
+    post = post_crud.get_post_by_id(id, db)
+    if post is None:
         raise HTTPException(
             status_code=404,
-            detail=f"User with id {id} was not found",
+            detail=f"Post with id {id} was not found",
         )
 
-    return user
+    return post
 
 
 @router.get("/", status_code=200, response_model=list[schemas.User])
