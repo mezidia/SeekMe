@@ -26,10 +26,16 @@ def get_posts_by_query(q: str, db: Session) -> list:
 
     posts = db.query(models.Post).all()
     queried_posts = []
+    desperate_qs = q.split(" ")
 
     for post in posts:
-        if q in post.full_name or q in post.last_place or q in post.description:
-            queried_posts.append(post)
+        for desperate_q in desperate_qs:
+            if (
+                desperate_q in post.full_name
+                or desperate_q in post.last_place
+                or desperate_q in post.description
+            ):
+                queried_posts.append(post)
 
     return queried_posts
 
