@@ -15,8 +15,8 @@ def get_post(id: int, db: Session = Depends(get_db)):
     get_post_by_id takes the post via post_crud by its id.
 
     :param id: id of post to get.
-    :param status_code: return code of operation.
-    :return: post info or raise exception with 404 code.
+    :param db: database session.
+    :return: post info.
     """
     post = post_crud.get_post_by_id(id, db)
     if post is None:
@@ -31,10 +31,9 @@ def get_post(id: int, db: Session = Depends(get_db)):
 @router.get("/", status_code=200, response_model=list[schemas.Post])
 def get_posts(db: Session = Depends(get_db)):
     """
-    get_posts takes all post via post_crud.
+    get_posts takes all posts via post_crud.
 
     :param db: database session.
-    :param status_code: return code of operation.
     :return: all posts.
     """
     posts = post_crud.get_all_posts(db)
@@ -47,8 +46,9 @@ def create_post(post: schemas.PostCreate, db: Session = Depends(get_db),current_
     """
     create_post creates the post via post_crud.
 
-    :param id: id of post to get.
-    :param status_code: return code of operation.
+    :param post: template for post data.
+    :param db: database session.
+    :param current_user: current user
     :return: created post.
     """
     return post_crud.create_post(current_user.id, post, db)
