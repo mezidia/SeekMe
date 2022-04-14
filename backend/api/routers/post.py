@@ -44,6 +44,13 @@ def get_posts(db: Session = Depends(get_db)):
 
 @router.post("/create/", status_code=201, response_model=schemas.Post)
 def create_post(post: schemas.PostCreate, db: Session = Depends(get_db),current_user: schemas.User = Depends(get_current_user)):
+    """
+    create_post creates the post via post_crud.
+
+    :param id: id of post to get.
+    :param status_code: return code of operation.
+    :return: created post.
+    """
     return post_crud.create_post(current_user.id, post, db)
 
 
