@@ -22,6 +22,13 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
 
 @router.get("/{id}", status_code=200, response_model=schemas.User)
 def get_user(id: int, db: Session = Depends(get_db)):
+    """
+    get_user gets the user by id via user_crud.
+
+    :param id: id of the user.
+    :param db: database session.
+    :return: user.
+    """
     user = user_crud.get_user_by_id(id, db)
     if user is None:
         raise HTTPException(
