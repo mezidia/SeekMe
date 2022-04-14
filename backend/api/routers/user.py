@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, File, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -42,10 +42,32 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return user_crud.create_user(user, db)
 
 
-@router.post("/update/{id}", status_code=200)
-def update_user(id: int, user: schemas.UserBase, db: Session = Depends(get_db), current_user: schemas.User = Depends(get_current_user)):
+@router.put("/update/{id}", status_code=200)
+def update_user(
+    id: int,
+    user: schemas.UserBase,
+    db: Session = Depends(get_db),
+    current_user: schemas.User = Depends(get_current_user),
+):
     if current_user.id != id:
-        raise HTTPException(status_code=403, detail=f"This operation is not allowed without log in")
+        raise HTTPException(
+            status_code=403, detail=f"This operation is not allowed without log in"
+        )
     user_crud.update_user(id, user, db)
 
     return {"detail": f"user with id {id} was updated"}
+
+
+@router.delete("/delete/{id}", status_code=404)
+def delete_user(
+    id: int,
+    db: Session = Depends(get_db),
+    current_user: schemas.User = Depends(get_current_user),
+):
+    if current_user.id != id:
+        raise HTTPException(
+            status_code=403, detail=f"This operation is not allowed without log in"
+        )
+    user_crud.delete_user(id, db)
+
+    return Response(status_code=404)
