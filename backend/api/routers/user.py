@@ -75,6 +75,15 @@ def update_user(
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(get_current_user),
 ):
+    """
+    update_user updates the user by id via user_crud.
+
+    :param id: id of the user.
+    :param user: user template.
+    :param db: database session.
+    :param current_user: current user
+    :return: status code.
+    """
     if current_user.id != id:
         raise HTTPException(
             status_code=403, detail=f"This operation is not allowed without log in"
