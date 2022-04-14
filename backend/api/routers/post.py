@@ -61,6 +61,15 @@ def update_post(
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(get_current_user),
 ):
+    """
+    update_post updates the post via post_crud.
+
+    :param id: id of the post.
+    :param post: template for post data.
+    :param db: database session.
+    :param current_user: current user
+    :return: updated post.
+    """
     db_post = post_crud.get_post_by_id(id, db)
     if current_user.id != db_post.owner_id:
         raise HTTPException(
