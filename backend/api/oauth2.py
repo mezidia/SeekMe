@@ -17,7 +17,14 @@ ALGORITHM = settings.algorithm
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
 
-def create_access_token(data: dict):
+def create_access_token(data: dict) -> str:
+    """
+    create_access_token creates JWT access token for user's login.
+
+    :param data: subject data for token.
+    :return: created JWT token.
+    """
+
     to_encode = data.copy()
 
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -29,7 +36,15 @@ def create_access_token(data: dict):
     return encoded_jwt
 
 
-def verify_access_token(token: str, credentials_exception):
+def verify_access_token(token: str, credentials_exception) -> schemas.TokenData:
+    """
+    verify_access_token checks the token for a match with the user's token.
+
+    :param token: token to verify.
+    :param credentials_exception: exception for error in token decoding.
+    :return: data of succesfully verified token or credentials exception if token cannot be decoded.
+    """
+
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         id = payload.get("sub")
@@ -47,6 +62,13 @@ def get_current_user(
     token: str = Depends(oauth2_scheme), 
     db: Session = Depends(database.get_db)
 ):
+    """
+    get_current_user returns the user object that is currently logged in.
+
+    :param token: token to verify.
+    :param db: database session.
+    :return: user object that is currently logged in.
+    """
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail=f"Could not validate credentials",
