@@ -67,7 +67,7 @@ export default function Login() {
           onClick={handleSubmit}
           className="btn btn-primary"
         >
-          Submit
+          Увійти
         </button>
       </form>
     </>
