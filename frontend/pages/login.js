@@ -35,7 +35,7 @@ export default function Login() {
   return (
     <>
       {error ? <Error error={error} /> : ""}
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label for="exampleInputEmail1" className="form-label">
             Електронна пошта
@@ -46,6 +46,7 @@ export default function Login() {
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             ref={emailRef}
+            required
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
@@ -60,13 +61,10 @@ export default function Login() {
             className="form-control"
             id="exampleInputPassword1"
             ref={passwordRef}
+            required
           />
         </div>
-        <button
-          type="submit"
-          onClick={handleSubmit}
-          className="btn btn-primary"
-        >
+        <button type="submit" className="btn btn-primary">
           Увійти
         </button>
       </form>

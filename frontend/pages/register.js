@@ -56,7 +56,7 @@ export default function Register() {
   return (
     <>
       {error ? <Error error={error} /> : ""}
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label for="exampleInputName1" className="form-label">
             Ім'я
@@ -67,6 +67,7 @@ export default function Register() {
             id="exampleInputName1"
             aria-describedby="emailHelp"
             ref={nameRef}
+            required
           />
         </div>
         <div className="mb-3">
@@ -79,6 +80,7 @@ export default function Register() {
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             ref={emailRef}
+            required
           />
         </div>
         <div className="mb-3">
@@ -90,6 +92,7 @@ export default function Register() {
             className="form-control"
             id="exampleInputPassword1"
             ref={passwordRef}
+            required
           />
         </div>
         <div className="mb-3">
@@ -101,13 +104,10 @@ export default function Register() {
             className="form-control"
             id="exampleInputPhone1"
             ref={phoneRef}
+            required
           />
         </div>
-        <button
-          type="submit"
-          onClick={handleSubmit}
-          className="btn btn-primary"
-        >
+        <button type="submit" className="btn btn-primary">
           Зареєструватись
         </button>
       </form>
