@@ -1,15 +1,21 @@
+import Link from "next/link";
+
 export default function RegLogin() {
   return (
     <>
       <li className="nav-item">
-        <a className="nav-link" aria-current="page" href="#">
-          Реєстрація
-        </a>
+        <Link href="/register">
+          <a className="nav-link" aria-current="page">
+            Реєстрація
+          </a>
+        </Link>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="#">
-          Вхід
-        </a>
+        <Link href="/login">
+          <a className="nav-link" aria-current="page">
+            Вхід
+          </a>
+        </Link>
       </li>
     </>
   );

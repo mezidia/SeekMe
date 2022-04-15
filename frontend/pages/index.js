@@ -6,8 +6,8 @@ export default function Home({ posts }) {
       <ul>
         {posts.map((post) => (
           <li key={post.id}>
-            {post.id}. {post.title}, Author:{" "}
-            <Link href={`/user/${post.userId}`}>
+            {post.id}. {post.full_name}, Author:{" "}
+            <Link href={`/user/${post.owner_id}`}>
               <a>Author posts</a>
             </Link>
           </li>
@@ -18,7 +18,7 @@ export default function Home({ posts }) {
 }
 
 export async function getServerSideProps() {
-  const data = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const data = await fetch("http://127.0.0.1:8000/posts/");
   const posts = await data.json();
   return {
     props: {
