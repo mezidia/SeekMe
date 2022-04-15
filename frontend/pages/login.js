@@ -1,11 +1,13 @@
-import { useRef } from "react";
-
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
+
+import Error from "../components/Error";
 
 export default function Login() {
   const router = useRouter();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,46 +24,52 @@ export default function Login() {
       ),
     });
     const data = await response.json();
-    console.log(data);
     if (data.access_token) {
       localStorage.setItem("token", data.access_token);
       router.push("/");
     } else {
-      alert(data.message);
+      setError(data.detail);
     }
   };
 
   return (
-    <form>
-      <div className="mb-3">
-        <label for="exampleInputEmail1" className="form-label">
-          Email address
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-          ref={emailRef}
-        />
-        <div id="emailHelp" className="form-text">
-          We'll never share your email with anyone else.
+    <>
+      {error ? <Error error={error} /> : ""}
+      <form>
+        <div className="mb-3">
+          <label for="exampleInputEmail1" className="form-label">
+            Email address
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            ref={emailRef}
+          />
+          <div id="emailHelp" className="form-text">
+            We'll never share your email with anyone else.
+          </div>
         </div>
-      </div>
-      <div className="mb-3">
-        <label for="exampleInputPassword1" className="form-label">
-          Password
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="exampleInputPassword1"
-          ref={passwordRef}
-        />
-      </div>
-      <button type="submit" onClick={handleSubmit} className="btn btn-primary">
-        Submit
-      </button>
-    </form>
+        <div className="mb-3">
+          <label for="exampleInputPassword1" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="exampleInputPassword1"
+            ref={passwordRef}
+          />
+        </div>
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="btn btn-primary"
+        >
+          Submit
+        </button>
+      </form>
+    </>
   );
 }
