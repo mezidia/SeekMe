@@ -9,6 +9,16 @@ import schemas
 router = APIRouter(prefix="/users", tags=["users"])
 
 
+@router.get("/me", response_model=schemas.User)
+async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
+    """
+    read_users_me reads current user.
+    :param current_user: current user
+    :return: current user.
+    """
+    return current_user
+
+
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.User)
 def get_user(id: int, db: Session = Depends(get_db)):
     """
