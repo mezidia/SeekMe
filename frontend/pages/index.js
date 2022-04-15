@@ -1,18 +1,9 @@
-import Link from "next/link";
+import PostList from "../components/PostList";
 
 export default function Home({ posts }) {
   return (
     <div>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            {post.id}. {post.full_name}, Author:{" "}
-            <Link href={`/user/${post.owner_id}`}>
-              <a>Author posts</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <PostList posts={posts} />
     </div>
   );
 }
