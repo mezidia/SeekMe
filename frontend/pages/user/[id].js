@@ -1,24 +1,21 @@
-export default function Home({ posts, id }) {
+import PostList from "../../components/PostList";
+
+export default function Home({ user }) {
   return (
     <div>
-      <h1>Posts from user with id: {id}</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            {post.id}. {post.title}
-          </li>
-        ))}
-      </ul>
+      <h1>Posts from user with {user.name}</h1>
+      <h2>His email - {user.email}</h2>
+      <h2>His phone - {user.phone_number}</h2>
+      <h3>His posts:</h3>
+      <PostList posts={user.posts} />
     </div>
   );
 }
 
 export async function getServerSideProps({ params: { id } }) {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts?userId=${id}`
-  );
-  const posts = await response.json();
+  const response = await fetch(`http://127.0.0.1:8000/users/${id}`);
+  const user = await response.json();
   return {
-    props: { posts, id },
+    props: { user },
   };
 }
