@@ -30,12 +30,18 @@ def get_posts_by_query(q: str, db: Session) -> list:
 
     for post in posts:
         for desperate_q in desperate_qs:
-            if (
-                desperate_q in post.full_name
-                or desperate_q in post.last_place
-                or desperate_q in post.description
-            ):
+            massivchik = 0
+            if (desperate_q in post.full_name):
+                massivchik += len(desperate_q) / len(post.full_name) * 100
+            if (desperate_q in post.last_place):
+                massivchik += len(desperate_q) / len(post.last_place) * 100
+            if (desperate_q in post.description):
+                massivchik += len(desperate_q) / len(post.description) * 100
+            if massivchik != 0:
+                post.percentage = massivchik
                 queried_posts.append(post)
+
+    queried_posts.sort(key=lambda x: x.percentage, reverse=True)
 
     return queried_posts
 

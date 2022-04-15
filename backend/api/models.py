@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -11,6 +11,7 @@ class Post(Base):
     full_name = Column(String, nullable=False)
     last_place = Column(String, nullable=False)
     description = Column(String, nullable=False)
+    percentage = Column(Float, default=0.0)
     image = Column(String)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
