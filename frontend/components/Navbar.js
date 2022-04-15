@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import RegLogin from "./RegLogin";
 import UserHeader from "./UserHeader";
+import Form from "./SearchForm";
 
 export default function Navbar() {
   const router = useRouter();
@@ -34,17 +35,7 @@ export default function Navbar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             {!token ? <RegLogin /> : <UserHeader setToken={setToken} />}
           </ul>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Знайти пости"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Знайти
-            </button>
-          </form>
+          <Form />
         </div>
       </div>
     </nav>
