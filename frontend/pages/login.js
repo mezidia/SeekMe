@@ -38,7 +38,7 @@ export default function Login() {
       <form>
         <div className="mb-3">
           <label for="exampleInputEmail1" className="form-label">
-            Email address
+            Електронна пошта
           </label>
           <input
             type="email"
@@ -53,7 +53,7 @@ export default function Login() {
         </div>
         <div className="mb-3">
           <label for="exampleInputPassword1" className="form-label">
-            Password
+            Пароль
           </label>
           <input
             type="password"
