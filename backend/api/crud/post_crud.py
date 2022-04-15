@@ -1,3 +1,4 @@
+from sqlalchemy import or_
 from sqlalchemy.orm import Session, Query
 
 import models, schemas
@@ -24,20 +25,21 @@ def get_posts_by_query(q: str, db: Session) -> list:
     :return: first result of session query or None if the result doesn't contain any row.
     """
 
-    posts = db.query(models.Post).all()
-    queried_posts = []
-    desperate_qs = q.split(" ")
+    posts = db.query(models.Post).filter(or_(models.Post.full_name.like(f'{q}%'), models.Post.last_place.like(f'{q}%'), models.Post.description.like(f'{q}%'))).all()
+    print(posts)
+    # queried_posts = []
+    # desperate_qs = q.split(" ")
 
-    for post in posts:
-        for desperate_q in desperate_qs:
-            if (
-                desperate_q in post.full_name
-                or desperate_q in post.last_place
-                or desperate_q in post.description
-            ):
-                queried_posts.append(post)
+    # for post in posts:
+    #     for desperate_q in desperate_qs:
+    #         if (
+    #             desperate_q in post.full_name
+    #             or desperate_q in post.last_place
+    #             or desperate_q in post.description
+    #         ):
+    #             queried_posts.append(post)
 
-    return queried_posts
+    return posts
 
 
 def get_all_posts(db: Session) -> list:
