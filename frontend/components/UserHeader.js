@@ -24,11 +24,13 @@ export default function UserHeader({ setToken }) {
 
   return (
     <>
-      <li className="nav-item">Hello, {userName}</li>
       <li className="nav-item">
-        <p className="nav-link" onClick={logout}>
+        <span className="nav-link fw-bold">Hello, {userName}</span>
+      </li>
+      <li className="nav-item">
+        <span className="nav-link" onClick={logout}>
           Вихід
-        </p>
+        </span>
       </li>
     </>
   );
