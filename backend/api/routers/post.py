@@ -1,8 +1,5 @@
-from typing import Optional
-
 from fastapi import APIRouter, Depends, UploadFile, HTTPException, Response, status
 from sqlalchemy.orm import Session
-from PIL import Image
 
 from database import get_db
 from crud import post_crud
