@@ -1,5 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from typing import Optional
+
+from fastapi import APIRouter, Depends, UploadFile, HTTPException, Response, status
 from sqlalchemy.orm import Session
+from PIL import Image
 
 from database import get_db
 from crud import post_crud
@@ -7,6 +10,16 @@ from oauth2 import get_current_user
 import schemas
 
 router = APIRouter(prefix="/posts", tags=["posts"])
+
+
+@router.post("/add_image/")
+async def create_file(file: UploadFile):
+    content = await file.read()
+
+    with open(f'./images/{file.filename}', 'wb') as f:
+        f.write(content)
+
+    return {"Uploaded Filename": file.filename}
 
 
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.Post)
