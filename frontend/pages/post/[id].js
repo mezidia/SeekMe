@@ -94,14 +94,14 @@ export default function Post({ post }) {
             className="btn btn-danger"
             onClick={() => handleDelete(post.id)}
           >
-            Danger
+            Видалити
           </button>
           <button
             type="button"
             className="btn btn-warning ms-2"
             onClick={() => handleUpdate(post.id)}
           >
-            {isUpdating ? "Save" : "Update"}
+            {isUpdating ? "Зберегти" : "Оновити"}
           </button>
         </>
       ) : null}
