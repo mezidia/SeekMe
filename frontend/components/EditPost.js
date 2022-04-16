@@ -5,7 +5,6 @@ export default function EditPost({
   newNameRef,
   newPlaceRef,
   newDescriptionRef,
-  newWayRef,
 }) {
   return (
     <form>
@@ -46,19 +45,6 @@ export default function EditPost({
           id="exampleInputDescription"
           defaultValue={post.description}
           ref={newDescriptionRef}
-          required
-        />
-      </div>
-      <div className="mb-3">
-        <label for="exampleInputWay" className="form-label">
-          Шлях до картинки
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="exampleInputWay"
-          defaultValue={post.image}
-          ref={newWayRef}
           required
         />
       </div>

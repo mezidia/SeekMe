@@ -14,7 +14,6 @@ export default function Post({ post }) {
   const newNameRef = useRef();
   const newPlaceRef = useRef();
   const newDescriptionRef = useRef();
-  const newWayRef = useRef();
 
   const handleDelete = async (id) => {
     const response = await fetch(`http://127.0.0.1:8000/posts/delete/${id}`, {
@@ -45,7 +44,6 @@ export default function Post({ post }) {
           full_name: newNameRef.current.value,
           last_place: newPlaceRef.current.value,
           description: newDescriptionRef.current.value,
-          image: newWayRef.current.value,
         }),
       });
       if (!response.ok) {
@@ -75,7 +73,10 @@ export default function Post({ post }) {
           <h1>Post name {post.full_name}</h1>
           <h2>Post last place - {post.last_place}</h2>
           <h2>Post description - {post.description}</h2>
-          {/* <image src={post.image} alt="image" /> */}
+          <image
+            src={`C:\Users\Maxim\Desktop\Projects\mezidia-airlines\backend\api\${post.image}`}
+            alt="image"
+          />
           <h2>
             <Link href={`/user/${post.owner_id}`}>
               <a>Author</a>
@@ -88,7 +89,6 @@ export default function Post({ post }) {
           newNameRef={newNameRef}
           newPlaceRef={newPlaceRef}
           newDescriptionRef={newDescriptionRef}
-          newWayRef={newWayRef}
         />
       )}
       {token ? (
