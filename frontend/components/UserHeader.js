@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import checkUser from "../utils/checkUser";
 
 export default function UserHeader({ setToken }) {
   const router = useRouter();
@@ -13,25 +14,8 @@ export default function UserHeader({ setToken }) {
   };
 
   const fetchUser = async () => {
-    const token = localStorage.getItem("token");
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-    const response = await fetch(
-      "http://127.0.0.1:8000/users/me",
-      requestOptions
-    );
-    if (!response.ok) {
-      localStorage.removeItem("token");
-    } else {
-      const user = await response.json();
-      setUserName(user.name);
-    }
+    const user = await checkUser();
+    setUserName(user.name);
   };
 
   useEffect(() => {
