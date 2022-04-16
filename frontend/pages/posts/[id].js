@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import Error from "../../components/Error";
 import EditPost from "../../components/EditPost";
@@ -65,6 +66,9 @@ export default function Post({ post }) {
 
   return (
     <>
+      <Head>
+        <title>{post.full_name}</title>
+      </Head>
       {error ? <Error error={error} /> : null}
       {!isUpdating ? (
         <>

@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 
 import Error from "../components/Error";
@@ -20,8 +21,18 @@ export default function Search() {
   }, [text]);
 
   return posts.length ? (
-    <PostList posts={posts} />
+    <>
+      <Head>
+        <title>Пошук постів</title>
+      </Head>
+      <PostList posts={posts} />
+    </>
   ) : (
-    <Error error={`No posts with query: ${text}`} />
+    <>
+      <Head>
+        <title>Помилка пошуку</title>
+      </Head>
+      <Error error={`No posts with query: ${text}`} />
+    </>
   );
 }

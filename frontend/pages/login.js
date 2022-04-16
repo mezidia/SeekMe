@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import Error from "../components/Error";
 
@@ -34,6 +35,9 @@ export default function Login() {
 
   return (
     <>
+      <Head>
+        <title>Вхід</title>
+      </Head>
       {error ? <Error error={error} /> : ""}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

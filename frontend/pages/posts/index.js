@@ -1,10 +1,17 @@
+import Head from "next/head";
+
 import PostList from "../../components/PostList";
 
 export default function Posts({ posts }) {
   return (
-    <div>
-      <PostList posts={posts} />
-    </div>
+    <>
+      <Head>
+        <title>Усі пости</title>
+      </Head>
+      <div>
+        <PostList posts={posts} />
+      </div>
+    </>
   );
 }
 
