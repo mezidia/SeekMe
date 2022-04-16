@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -43,9 +44,16 @@ export default function UserHeader({ setToken }) {
         <span className="nav-link fw-bold">Hello, {userName}</span>
       </li>
       <li className="nav-item">
-        <span className="nav-link" onClick={logout}>
-          Вихід
-        </span>
+        <Link href="/posts/new">
+          <a className="btn btn-outline-success" role="button">
+            Створити пост
+          </a>
+        </Link>
+      </li>
+      <li className="nav-item">
+        <button className="btn btn-outline-secondary ms-2" onClick={logout}>
+          Вийти
+        </button>
       </li>
     </>
   );
