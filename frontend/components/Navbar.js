@@ -35,7 +35,12 @@ export default function Navbar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             {!token ? <RegLogin /> : <UserHeader setToken={setToken} />}
           </ul>
-          <Form />
+          <>
+            <Link href="/posts">
+              <a className="nav-link">Усі пости</a>
+            </Link>
+            <Form />
+          </>
         </div>
       </div>
     </nav>
