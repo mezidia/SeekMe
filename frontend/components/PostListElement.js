@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function PostListElement({ post }) {
   return (
     <li>
-      <Link href={`/post/${post.id}`}>
+      <Link href={`/posts/${post.id}`}>
         <a>{post.full_name}</a>
       </Link>
       .{" "}
