@@ -90,8 +90,10 @@ def update_post(id: id, post: schemas.PostBase, db: Session) -> None:
 
     db_post.update(
         {
-            "title": post.title,
+            "full_name": post.full_name,
+            "last_place": post.last_place,
             "description": post.description,
+            "image": post.image,
         },
         synchronize_session=False,
     )
