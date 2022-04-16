@@ -12,17 +12,6 @@ import schemas
 router = APIRouter(prefix="/posts", tags=["posts"])
 
 
-@router.post("/add_image/")
-async def create_file(file: UploadFile):
-    content = await file.read()
-    file_path = f'images/{file.filename}'
-
-    with open(file_path, 'wb') as f:
-        f.write(content)
-
-    return {"file_path": file_path}
-
-
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.Post)
 def get_post(id: int, db: Session = Depends(get_db)):
     """
@@ -68,6 +57,17 @@ def get_posts(query: str, db: Session = Depends(get_db)):
     posts = post_crud.get_posts_by_query(query, db)
 
     return posts
+
+
+@router.post("/add/image/")
+async def create_file(file: UploadFile):
+    content = await file.read()
+    file_path = f'images/{file.filename}'
+
+    with open(file_path, 'wb') as f:
+        f.write(content)
+
+    return {"file_path": file_path}
 
 
 @router.post(
