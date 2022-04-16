@@ -118,4 +118,4 @@ def delete_user(
         )
     user_crud.delete_user(id, db)
 
-    return Response(status_code=status.HTTP_404_NOT_FOUND)
+    return {"detail": f"user with id {id} was deleted"}

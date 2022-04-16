@@ -15,11 +15,12 @@ router = APIRouter(prefix="/posts", tags=["posts"])
 @router.post("/add_image/")
 async def create_file(file: UploadFile):
     content = await file.read()
+    file_path = f'images/{file.filename}'
 
-    with open(f'./images/{file.filename}', 'wb') as f:
+    with open(file_path, 'wb') as f:
         f.write(content)
 
-    return {"Uploaded Filename": file.filename}
+    return {"file_path": file_path}
 
 
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.Post)
@@ -137,4 +138,4 @@ def delete_post(
         )
     post_crud.delete_post(id, db)
 
-    return Response(status_code=status.HTTP_404_NOT_FOUND)
+    return {"detail": f"post with id {id} was deleted"}
