@@ -15,7 +15,11 @@ export default function UserHeader({ setToken }) {
 
   const fetchUser = async () => {
     const user = await checkUser();
-    setUserName(user.name);
+    if (user) {
+      setUserName(user.name);
+    } else {
+      localStorage.removeItem("token");
+    }
   };
 
   useEffect(() => {
