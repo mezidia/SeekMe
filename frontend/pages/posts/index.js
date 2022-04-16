@@ -9,7 +9,7 @@ export default function Posts({ posts }) {
         <title>Усі пости</title>
       </Head>
       <div>
-        <PostList posts={posts} />
+        {posts.length > 0 ? <PostList posts={posts} /> : <p>Немає постів</p>}
       </div>
     </>
   );
