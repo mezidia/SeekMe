@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
 
@@ -34,7 +34,7 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    posts: list[Post] = []
+    posts: List[Post] = []
 
     class Config:
         orm_mode = True

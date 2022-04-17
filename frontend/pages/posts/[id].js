@@ -14,6 +14,7 @@ export default function Post({ post }) {
   const newNameRef = useRef();
   const newPlaceRef = useRef();
   const newDescriptionRef = useRef();
+  const imageRef = useRef();
 
   const handleDelete = async (id) => {
     const response = await fetch(`http://127.0.0.1:8000/posts/delete/${id}`, {
@@ -31,27 +32,53 @@ export default function Post({ post }) {
     }
   };
 
+  const postImage = async (id) => {
+    const formData = new FormData();
+    const image = imageRef.current.files[0];
+    formData.append("file", image);
+
+    const response = await fetch("http://127.0.0.1:8000/posts/add/image/", {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      setError(data.detail);
+    } else {
+      updatePost(data, id);
+    }
+  };
+
+  const updatePost = async (data, id) => {
+    const response = await fetch(`http://127.0.0.1:8000/posts/update/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        full_name: newNameRef.current.value,
+        last_place: newPlaceRef.current.value,
+        description: newDescriptionRef.current.value,
+        image: data.file_path,
+      }),
+    });
+    if (!response.ok) {
+      const data = await response.json();
+      setError(data.detail);
+    } else {
+      router.push(`/post/${id}`);
+    }
+  };
+
   const handleUpdate = async (id) => {
     setIsUpdating(!isUpdating);
     if (isUpdating) {
-      const response = await fetch(`http://127.0.0.1:8000/posts/update/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          full_name: newNameRef.current.value,
-          last_place: newPlaceRef.current.value,
-          description: newDescriptionRef.current.value,
-        }),
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.detail);
-      } else {
-        router.push(`/post/${id}`);
-      }
+      postImage(id);
     }
   };
 
@@ -89,6 +116,7 @@ export default function Post({ post }) {
           newNameRef={newNameRef}
           newPlaceRef={newPlaceRef}
           newDescriptionRef={newDescriptionRef}
+          imageRef={imageRef}
         />
       )}
       {token ? (

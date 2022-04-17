@@ -1,10 +1,9 @@
-import { useEffect } from "react";
-
 export default function EditPost({
   post,
   newNameRef,
   newPlaceRef,
   newDescriptionRef,
+  imageRef,
 }) {
   return (
     <form>
@@ -45,6 +44,18 @@ export default function EditPost({
           id="exampleInputDescription"
           defaultValue={post.description}
           ref={newDescriptionRef}
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label for="exampleInputDescription" className="form-label">
+          Зображення
+        </label>
+        <input
+          type="file"
+          className="form-control"
+          id="exampleInputDescription"
+          ref={imageRef}
           required
         />
       </div>

@@ -35,6 +35,7 @@ export default function NewPost() {
     });
     const data = await response.json();
     if (!response.ok) {
+      console.error("Post create error");
       setError(data.detail);
     } else {
       router.push(`/posts${data.id}`);
@@ -44,20 +45,22 @@ export default function NewPost() {
   const postImage = async () => {
     const formData = new FormData();
     const image = imageRef.current.files[0];
-    formData.append("file", image);
+    formData.append("file", image, image.name);
 
     const response = await fetch("http://127.0.0.1:8000/posts/add/image/", {
       method: "POST",
       body: formData,
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": image.type,
         Accept: "application/json",
       },
     });
     const data = await response.json();
     if (!response.ok) {
+      console.error("Image upload failed");
       setError(data.detail);
     } else {
+      return;
       createPost(data);
     }
   };
@@ -129,6 +132,7 @@ export default function NewPost() {
             </label>
             <input
               type="file"
+              name="file"
               className="form-control"
               id="exampleInputWay"
               placeholder="Зображення"

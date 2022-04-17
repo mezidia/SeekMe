@@ -2,6 +2,8 @@ from sqlalchemy.orm import Session, Query
 
 import models, schemas
 
+from typing import List
+
 
 def get_post_by_id(id: int, db: Session) -> Query:
     """
@@ -15,7 +17,7 @@ def get_post_by_id(id: int, db: Session) -> Query:
     return db.query(models.Post).filter(models.Post.id == id).first()
 
 
-def get_posts_by_query(q: str, db: Session) -> list:
+def get_posts_by_query(q: str, db: Session) -> List:
     """
     get_post_by_id takes the post from database by its id.
 
@@ -46,7 +48,7 @@ def get_posts_by_query(q: str, db: Session) -> list:
     return queried_posts
 
 
-def get_all_posts(db: Session) -> list:
+def get_all_posts(db: Session) -> List:
     """
     get_all_posts takes all posts from database.
 

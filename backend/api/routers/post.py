@@ -1,10 +1,21 @@
-from fastapi import APIRouter, Depends, UploadFile, HTTPException, Response, status
+from fastapi import (
+    APIRouter,
+    Depends,
+    UploadFile,
+    HTTPException,
+    Response,
+    status,
+    File,
+    Form,
+)
 from sqlalchemy.orm import Session
 
 from database import get_db
 from crud import post_crud
 from oauth2 import get_current_user
 import schemas
+
+from typing import List
 
 router = APIRouter(prefix="/posts", tags=["posts"])
 
@@ -28,7 +39,7 @@ def get_post(id: int, db: Session = Depends(get_db)):
     return post
 
 
-@router.get("/", status_code=status.HTTP_200_OK, response_model=list[schemas.Post])
+@router.get("/", status_code=status.HTTP_200_OK, response_model=List[schemas.Post])
 def get_posts(db: Session = Depends(get_db)):
     """
     get_posts takes all posts via post_crud.
@@ -42,7 +53,7 @@ def get_posts(db: Session = Depends(get_db)):
 
 
 @router.get(
-    "/search/{query}", status_code=status.HTTP_200_OK, response_model=list[schemas.Post]
+    "/search/{query}", status_code=status.HTTP_200_OK, response_model=List[schemas.Post]
 )
 def get_posts(query: str, db: Session = Depends(get_db)):
     """
@@ -57,11 +68,12 @@ def get_posts(query: str, db: Session = Depends(get_db)):
 
 
 @router.post("/add/image/")
-async def create_file(file: UploadFile):
+async def create_file(form: str = Form(...), file: UploadFile = File(...)):
+    print(file.__dict__)
     content = await file.read()
-    file_path = f'images/{file.filename}'
+    file_path = f"images/{file.filename}"
 
-    with open(file_path, 'wb') as f:
+    with open(file_path, "wb") as f:
         f.write(content)
 
     return {"file_path": file_path}

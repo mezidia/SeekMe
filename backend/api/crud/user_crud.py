@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session, Query
 from hashing import Hash
 import models, schemas
 
+from typing import List
+
 
 def get_user_by_id(id: int, db: Session) -> Query:
     """
@@ -28,7 +30,7 @@ def get_user_by_email(email: str, db: Session) -> Query:
     return db.query(models.User).filter(models.User.email == email).first()
 
 
-def get_all_users(db: Session) -> list:
+def get_all_users(db: Session) -> List:
     """
     get_all_users takes all users from database.
 

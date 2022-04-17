@@ -6,6 +6,8 @@ from crud import user_crud
 from oauth2 import get_current_user
 import schemas
 
+from typing import List
+
 router = APIRouter(prefix="/users", tags=["users"])
 
 
@@ -38,7 +40,7 @@ def get_user(id: int, db: Session = Depends(get_db)):
     return user
 
 
-@router.get("/", status_code=status.HTTP_200_OK, response_model=list[schemas.User])
+@router.get("/", status_code=status.HTTP_200_OK, response_model=List[schemas.User])
 def get_users(db: Session = Depends(get_db)):
     """
     get_users gets all users via user_crud.
