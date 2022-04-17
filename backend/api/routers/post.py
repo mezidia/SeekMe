@@ -79,25 +79,6 @@ async def create_file(form: str = Form(...), file: UploadFile = File(...)):
     return {"file_path": file_path}
 
 
-@router.post(
-    "/create/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post
-)
-def create_post(
-    post: schemas.PostCreate,
-    db: Session = Depends(get_db),
-    current_user: schemas.User = Depends(get_current_user),
-):
-    """
-    create_post creates the post via post_crud.
-
-    :param post: template for post data.
-    :param db: database session.
-    :param current_user: current user
-    :return: created post.
-    """
-    return post_crud.create_post(current_user.id, post, db)
-
-
 @router.put("/update/{id}", status_code=status.HTTP_200_OK)
 def update_post(
     id: int,
