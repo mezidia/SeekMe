@@ -7,6 +7,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Error from "../../components/Error";
 import EditPost from "../../components/EditPost";
 import { storage } from "../../firebase";
+import checkUser from "../../utils/checkUser";
 
 export default function Post({ post }) {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function Post({ post }) {
   const [token, setToken] = useState(null);
   const [photoUrl, setPhotoUrl] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isAuthor, setIsAuthor] = useState(false);
 
   const newNameRef = useRef();
   const newPlaceRef = useRef();
@@ -99,7 +101,15 @@ export default function Post({ post }) {
       });
   };
 
+  const checkAuthor = async () => {
+    const user = await checkUser();
+    if (user.id === post.owner_id) {
+      setIsAuthor(true);
+    } else setIsAuthor(false);
+  };
+
   useEffect(() => {
+    checkAuthor();
     const token = localStorage.getItem("token");
     if (token) {
       setToken(token);
@@ -140,7 +150,7 @@ export default function Post({ post }) {
           imageRef={imageRef}
         />
       )}
-      {token ? (
+      {token && isAuthor ? (
         <>
           <button
             type="button"
