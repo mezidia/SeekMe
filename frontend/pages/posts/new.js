@@ -151,7 +151,6 @@ export default function NewPost() {
             </label>
             <input
               type="file"
-              name="file"
               className="form-control"
               id="exampleInputWay"
               placeholder="Зображення"
