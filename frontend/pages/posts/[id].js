@@ -2,15 +2,20 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import Error from "../../components/Error";
 import EditPost from "../../components/EditPost";
+import { storage } from "../../firebase";
 
 export default function Post({ post }) {
   const router = useRouter();
+
   const [error, setError] = useState(null);
   const [token, setToken] = useState(null);
+  const [photoUrl, setPhotoUrl] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+
   const newNameRef = useRef();
   const newPlaceRef = useRef();
   const newDescriptionRef = useRef();
@@ -82,11 +87,24 @@ export default function Post({ post }) {
     }
   };
 
+  const getImage = (imagePath) => {
+    getDownloadURL(ref(storage, imagePath))
+      .then((url) => {
+        // `url` is the download URL for 'images/stars.jpg'
+        setPhotoUrl(url);
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error(error);
+      });
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       setToken(token);
     }
+    getImage(post.image);
   }, []);
 
   return (
@@ -100,9 +118,12 @@ export default function Post({ post }) {
           <h1>Post name {post.full_name}</h1>
           <h2>Post last place - {post.last_place}</h2>
           <h2>Post description - {post.description}</h2>
-          <image
-            src={`C:\Users\Maxim\Desktop\Projects\mezidia-airlines\backend\api\${post.image}`}
+          <img
+            src={photoUrl}
             alt="image"
+            className="img-fluid"
+            width={300}
+            height={300}
           />
           <h2>
             <Link href={`/user/${post.owner_id}`}>
