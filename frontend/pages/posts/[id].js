@@ -1,8 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 
 import Error from "../../components/Error";
 import EditPost from "../../components/EditPost";
@@ -18,10 +23,10 @@ export default function Post({ post }) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isAuthor, setIsAuthor] = useState(false);
 
-  const newNameRef = useRef();
-  const newPlaceRef = useRef();
-  const newDescriptionRef = useRef();
-  const imageRef = useRef();
+  const [newName, setNewName] = useState(post.full_name);
+  const [newPlace, setNewPlace] = useState(post.last_place);
+  const [newDescription, setNewDescription] = useState(post.description);
+  const [newImage, setNewImage] = useState(null);
 
   const handleDelete = async (id) => {
     const response = await fetch(`http://127.0.0.1:8000/posts/delete/${id}`, {
@@ -39,28 +44,53 @@ export default function Post({ post }) {
     }
   };
 
-  const postImage = async (id) => {
-    const formData = new FormData();
-    const image = imageRef.current.files[0];
-    formData.append("file", image);
+  const postImage = (id) => {
+    const image = newImage;
+    const storageRef = ref(storage, `images/${image.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
 
-    const response = await fetch("http://127.0.0.1:8000/posts/add/image/", {
-      method: "POST",
-      body: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Accept: "application/json",
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
       },
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      setError(data.detail);
-    } else {
-      updatePost(data, id);
-    }
+      (error) => {
+        console.error(error);
+        setError(error);
+      },
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        updatePost(`images/${image.name}`, id);
+      }
+    );
   };
 
-  const updatePost = async (data, id) => {
+  const deleteImage = (id) => {
+    const desertRef = ref(storage, post.image);
+    // Delete the file
+    deleteObject(desertRef)
+      .then(() => {
+        postImage(id);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const updatePost = async (imagePath, id) => {
     const response = await fetch(`http://127.0.0.1:8000/posts/update/${id}`, {
       method: "PUT",
       headers: {
@@ -68,25 +98,28 @@ export default function Post({ post }) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        full_name: newNameRef.current.value,
-        last_place: newPlaceRef.current.value,
-        description: newDescriptionRef.current.value,
-        image: data.file_path,
+        full_name: newName,
+        last_place: newPlace,
+        description: newDescription,
+        image: imagePath,
       }),
     });
     if (!response.ok) {
       const data = await response.json();
       setError(data.detail);
     } else {
-      router.push(`/post/${id}`);
+      router.push("/");
     }
   };
 
   const handleUpdate = async (id) => {
-    setIsUpdating(!isUpdating);
     if (isUpdating) {
-      postImage(id);
-    }
+      if (newImage) {
+        deleteImage(id);
+      } else {
+        updatePost(post.image, id);
+      }
+    } else setIsUpdating(!isUpdating);
   };
 
   const getImage = (imagePath) => {
@@ -144,10 +177,10 @@ export default function Post({ post }) {
       ) : (
         <EditPost
           post={post}
-          newNameRef={newNameRef}
-          newPlaceRef={newPlaceRef}
-          newDescriptionRef={newDescriptionRef}
-          imageRef={imageRef}
+          setNewName={setNewName}
+          setNewPlace={setNewPlace}
+          setNewDescription={setNewDescription}
+          setNewImage={setNewImage}
         />
       )}
       {token && isAuthor ? (

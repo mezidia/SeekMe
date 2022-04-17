@@ -1,9 +1,9 @@
 export default function EditPost({
   post,
-  newNameRef,
-  newPlaceRef,
-  newDescriptionRef,
-  imageRef,
+  setNewName,
+  setNewPlace,
+  setNewDescription,
+  setNewImage,
 }) {
   return (
     <form>
@@ -16,7 +16,7 @@ export default function EditPost({
           className="form-control"
           id="exampleInputName"
           aria-describedby="emailHelp"
-          ref={newNameRef}
+          onChange={(e) => setNewName(e.target.value)}
           defaultValue={post.full_name}
           required
         />
@@ -30,7 +30,7 @@ export default function EditPost({
           className="form-control"
           id="exampleInputPlace"
           defaultValue={post.last_place}
-          ref={newPlaceRef}
+          onChange={(e) => setNewPlace(e.target.value)}
           required
         />
       </div>
@@ -43,7 +43,7 @@ export default function EditPost({
           className="form-control"
           id="exampleInputDescription"
           defaultValue={post.description}
-          ref={newDescriptionRef}
+          onChange={(e) => setNewDescription(e.target.value)}
           required
         />
       </div>
@@ -55,7 +55,7 @@ export default function EditPost({
           type="file"
           className="form-control"
           id="exampleInputDescription"
-          ref={imageRef}
+          onChange={(e) => setNewImage(e.target.files[0])}
           required
         />
       </div>
