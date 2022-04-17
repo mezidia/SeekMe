@@ -1,9 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import checkUser from "../../utils/checkUser";
 import Error from "../../components/Error";
+import { storage } from "../../firebase";
 
 export default function NewPost() {
   const router = useRouter();
@@ -15,11 +17,13 @@ export default function NewPost() {
   const [error, setError] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const createPost = async (data) => {
+  const createPost = async (imagePath) => {
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
     const place = placeRef.current.value;
+
     const token = localStorage.getItem("token");
+
     const response = await fetch("http://127.0.0.1:8000/posts/create/", {
       method: "POST",
       headers: {
@@ -30,39 +34,54 @@ export default function NewPost() {
         full_name: name,
         description,
         last_place: place,
-        image: data.file_path,
+        image: imagePath,
       }),
     });
-    const data = await response.json();
+
+    const response_data = await response.json();
     if (!response.ok) {
       console.error("Post create error");
-      setError(data.detail);
+      setError(response_data.detail);
     } else {
-      router.push(`/posts${data.id}`);
+      router.push(`/posts/${response_data.id}`);
     }
   };
 
   const postImage = async () => {
-    const formData = new FormData();
     const image = imageRef.current.files[0];
-    formData.append("file", image, image.name);
+    const storageRef = ref(storage, `images/${image.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
 
-    const response = await fetch("http://127.0.0.1:8000/posts/add/image/", {
-      method: "POST",
-      body: formData,
-      headers: {
-        "Content-Type": image.type,
-        Accept: "application/json",
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
       },
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      console.error("Image upload failed");
-      setError(data.detail);
-    } else {
-      return;
-      createPost(data);
-    }
+      (error) => {
+        console.error(error);
+        setError(error);
+      },
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          createPost(`images/${image.name}`);
+        });
+      }
+    );
   };
 
   const handleSubmit = async (e) => {
