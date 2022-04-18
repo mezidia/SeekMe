@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import Error from "../../components/Error";
 import { storage } from "../../firebase";
+import checkUser from "../../utils/checkUser";
 
 export default function NewPost() {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function NewPost() {
   const imageRef = useRef();
 
   const [error, setError] = useState(null);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   const createPost = async (imagePath) => {
     const name = nameRef.current.value;
@@ -87,78 +89,85 @@ export default function NewPost() {
     postImage();
   };
 
+  const checkAuth = async () => {
+    const token = await checkUser();
+    if (token) {
+      setIsAuthorized(true);
+    }
+  };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   return (
     <>
       <Head>
         <title>Створити пост</title>
       </Head>
       {error ? <Error error={error} /> : null}
-      {localStorage.getItem("token") ? (
-        <Error error={"You need to be authenticated"} />
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label for="exampleInputName" className="form-label">
-              Повне ім'я
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputName"
-              aria-describedby="emailHelp"
-              placeholder="Ім'я"
-              ref={nameRef}
-              required
-              disabled={localStorage.getItem("token") ? false : true}
-            />
-          </div>
-          <div className="mb-3">
-            <label for="exampleInputPlace" className="form-label">
-              Місце проживання
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputPlace"
-              placeholder="Місце проживання"
-              ref={placeRef}
-              required
-              disabled={localStorage.getItem("token") ? false : true}
-            />
-          </div>
-          <div className="mb-3">
-            <label for="exampleInputDescription" className="form-label">
-              Опис
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputDescription"
-              placeholder="Опис"
-              ref={descriptionRef}
-              required
-              disabled={localStorage.getItem("token") ? false : true}
-            />
-          </div>
-          <div className="mb-3">
-            <label for="exampleInputWay" className="form-label">
-              Зображення
-            </label>
-            <input
-              type="file"
-              className="form-control"
-              id="exampleInputWay"
-              placeholder="Зображення"
-              ref={imageRef}
-              required
-              disabled={localStorage.getItem("token") ? false : true}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Створити
-          </button>
-        </form>
-      )}
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label for="exampleInputName" className="form-label">
+            Повне ім'я
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="exampleInputName"
+            aria-describedby="emailHelp"
+            placeholder="Ім'я"
+            ref={nameRef}
+            required
+            disabled={isAuthorized ? false : true}
+          />
+        </div>
+        <div className="mb-3">
+          <label for="exampleInputPlace" className="form-label">
+            Місце проживання
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="exampleInputPlace"
+            placeholder="Місце проживання"
+            ref={placeRef}
+            required
+            disabled={isAuthorized ? false : true}
+          />
+        </div>
+        <div className="mb-3">
+          <label for="exampleInputDescription" className="form-label">
+            Опис
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="exampleInputDescription"
+            placeholder="Опис"
+            ref={descriptionRef}
+            required
+            disabled={isAuthorized ? false : true}
+          />
+        </div>
+        <div className="mb-3">
+          <label for="exampleInputWay" className="form-label">
+            Зображення
+          </label>
+          <input
+            type="file"
+            className="form-control"
+            id="exampleInputWay"
+            placeholder="Зображення"
+            ref={imageRef}
+            required
+            disabled={isAuthorized ? false : true}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Створити
+        </button>
+      </form>
     </>
   );
 }
