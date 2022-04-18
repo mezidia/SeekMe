@@ -1,9 +1,8 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-import checkUser from "../../utils/checkUser";
 import Error from "../../components/Error";
 import { storage } from "../../firebase";
 
@@ -15,7 +14,6 @@ export default function NewPost() {
   const imageRef = useRef();
 
   const [error, setError] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const createPost = async (imagePath) => {
     const name = nameRef.current.value;
@@ -89,19 +87,13 @@ export default function NewPost() {
     postImage();
   };
 
-  useEffect(() => {
-    if (checkUser()) {
-      setIsAuthenticated(true);
-    }
-  }, []);
-
   return (
     <>
       <Head>
         <title>Створити пост</title>
       </Head>
       {error ? <Error error={error} /> : null}
-      {!isAuthenticated ? (
+      {localStorage.getItem("token") ? (
         <Error error={"You need to be authenticated"} />
       ) : (
         <form onSubmit={handleSubmit}>
@@ -117,6 +109,7 @@ export default function NewPost() {
               placeholder="Ім'я"
               ref={nameRef}
               required
+              disabled={localStorage.getItem("token") ? false : true}
             />
           </div>
           <div className="mb-3">
@@ -130,6 +123,7 @@ export default function NewPost() {
               placeholder="Місце проживання"
               ref={placeRef}
               required
+              disabled={localStorage.getItem("token") ? false : true}
             />
           </div>
           <div className="mb-3">
@@ -143,6 +137,7 @@ export default function NewPost() {
               placeholder="Опис"
               ref={descriptionRef}
               required
+              disabled={localStorage.getItem("token") ? false : true}
             />
           </div>
           <div className="mb-3">
@@ -156,6 +151,7 @@ export default function NewPost() {
               placeholder="Зображення"
               ref={imageRef}
               required
+              disabled={localStorage.getItem("token") ? false : true}
             />
           </div>
           <button type="submit" className="btn btn-primary">
