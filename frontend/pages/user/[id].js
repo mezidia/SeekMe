@@ -3,10 +3,17 @@ import PostList from "../../components/PostList";
 export default function Home({ user }) {
   return (
     <div>
-      <h1>Posts from user with {user.name}</h1>
-      <h2>His email - {user.email}</h2>
-      <h2>His phone - {user.phone_number}</h2>
-      <h3>His posts:</h3>
+      <h1>
+        Усі пости від користувача: <u>{user.name}</u>
+      </h1>
+      <h2>
+        Електронний адрес:{" "}
+        <a href={`mailto:${user.email}`} title="Написати">
+          {user.email}
+        </a>
+      </h2>
+      <h2>Телефон - {user.phone_number}</h2>
+      <h3>Усі пости:</h3>
       <PostList posts={user.posts} />
     </div>
   );
