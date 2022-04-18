@@ -158,19 +158,25 @@ export default function Post({ post }) {
       {error ? <Error error={error} /> : null}
       {!isUpdating ? (
         <>
-          <h1>Post name {post.full_name}</h1>
-          <h2>Post last place - {post.last_place}</h2>
-          <h2>Post description - {post.description}</h2>
-          <img
-            src={photoUrl}
-            alt="image"
-            className="img-fluid"
-            width={300}
-            height={300}
-          />
+          <h1>
+            Ім'я посту: <u>{post.full_name}</u>
+          </h1>
+          <h2>Останнє місце: {post.last_place}</h2>
+          <h2>Опис: {post.description}</h2>
+          {photoUrl ? (
+            <img
+              src={photoUrl}
+              alt="image"
+              className="img-fluid"
+              width={300}
+              height={300}
+            />
+          ) : (
+            <h3>Фото немає!</h3>
+          )}
           <h2>
             <Link href={`/user/${post.owner_id}`}>
-              <a>Author</a>
+              <a>Сторінка автора</a>
             </Link>
           </h2>
         </>
