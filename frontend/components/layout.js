@@ -16,7 +16,9 @@ export default function Layout({ children }) {
         <title>ЗнайдиМене</title>
       </Head>
       <Navbar />
-      <div className="container-fluid">{children}</div>
+      <div className="container-fluid d-flex flex-column min-vh-100">
+        {children}
+      </div>
       <Footer />
     </>
   );
