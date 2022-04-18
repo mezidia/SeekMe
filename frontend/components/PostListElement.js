@@ -1,26 +1,51 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { ref, getDownloadURL } from "firebase/storage";
+
+import { storage } from "../firebase";
 
 export default function PostListElement({ post }) {
+  const [photoUrl, setPhotoUrl] = useState(null);
+
+  const getImage = (imagePath) => {
+    getDownloadURL(ref(storage, imagePath))
+      .then((url) => {
+        // `url` is the download URL for 'images/stars.jpg'
+        setPhotoUrl(url);
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    getImage(post.image);
+  });
+
   return (
     <div className="col">
       <div className="card shadow-sm">
-        <svg
-          className="bd-placeholder-img card-img-top"
-          width="100%"
-          height="225"
-          xmlns="http://www.w3.org/2000/svg"
-          role="img"
-          aria-label="Placeholder: Thumbnail"
-          preserveAspectRatio="xMidYMid slice"
-          focusable="false"
-        >
-          <title>Placeholder</title>
-          <rect width="100%" height="100%" fill="#55595c"></rect>
-          <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-            Thumbnail
-          </text>
-        </svg>
-
+        {photoUrl ? (
+          <img src={photoUrl} className="img-fluid" />
+        ) : (
+          <svg
+            className="bd-placeholder-img card-img-top"
+            width="100%"
+            height="225"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Placeholder: Thumbnail"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#55595c"></rect>
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+              Thumbnail
+            </text>
+          </svg>
+        )}
         <div className="card-body">
           <p className="card-text">{post.description}</p>
           <div className="d-flex justify-content-between align-items-center">
