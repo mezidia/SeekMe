@@ -41,7 +41,7 @@ export default function Login() {
       {error ? <Error error={error} /> : ""}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Електронна пошта
           </label>
           <input
@@ -57,7 +57,7 @@ export default function Login() {
           </div>
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Пароль
           </label>
           <input

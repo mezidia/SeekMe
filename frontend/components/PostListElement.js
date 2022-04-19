@@ -27,7 +27,7 @@ export default function PostListElement({ post }) {
     <div className="col">
       <div className="card shadow-sm">
         {photoUrl ? (
-          <img src={photoUrl} className="img-fluid" />
+          <img src={photoUrl} className="img-fluid" alt="photo" />
         ) : (
           <svg
             className="bd-placeholder-img card-img-top"
@@ -59,7 +59,7 @@ export default function PostListElement({ post }) {
                 <a
                   type="button"
                   role="button"
-                  class="btn btn-outline-dark ms-1"
+                  className="btn btn-outline-dark ms-1"
                 >
                   Інші пости автора
                 </a>

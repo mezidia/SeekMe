@@ -8,7 +8,7 @@ export default function EditPost({
   return (
     <form>
       <div className="mb-3">
-        <label for="exampleInputName" className="form-label">
+        <label htmlFor="exampleInputName" className="form-label">
           Повне ім'я
         </label>
         <input
@@ -22,7 +22,7 @@ export default function EditPost({
         />
       </div>
       <div className="mb-3">
-        <label for="exampleInputPlace" className="form-label">
+        <label htmlFor="exampleInputPlace" className="form-label">
           Місце проживання
         </label>
         <input
@@ -35,7 +35,7 @@ export default function EditPost({
         />
       </div>
       <div className="mb-3">
-        <label for="exampleInputDescription" className="form-label">
+        <label htmlFor="exampleInputDescription" className="form-label">
           Опис
         </label>
         <input
@@ -48,7 +48,7 @@ export default function EditPost({
         />
       </div>
       <div className="mb-3">
-        <label for="exampleInputDescription" className="form-label">
+        <label htmlFor="exampleInputDescription" className="form-label">
           Зображення
         </label>
         <input

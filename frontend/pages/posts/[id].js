@@ -149,7 +149,7 @@ export default function Post({ post }) {
       setToken(token);
     }
     getImage(post.image);
-  }, []);
+  });
 
   return (
     <>

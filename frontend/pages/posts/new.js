@@ -108,7 +108,7 @@ export default function NewPost() {
       {error ? <Error error={error} /> : null}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label for="exampleInputName" className="form-label">
+          <label htmlFor="exampleInputName" className="form-label">
             Повне ім'я
           </label>
           <input
@@ -123,7 +123,7 @@ export default function NewPost() {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputPlace" className="form-label">
+          <label htmlFor="exampleInputPlace" className="form-label">
             Місце проживання
           </label>
           <input
@@ -137,7 +137,7 @@ export default function NewPost() {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputDescription" className="form-label">
+          <label htmlFor="exampleInputDescription" className="form-label">
             Опис
           </label>
           <input
@@ -151,7 +151,7 @@ export default function NewPost() {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputWay" className="form-label">
+          <label htmlFor="exampleInputWay" className="form-label">
             Зображення
           </label>
           <input

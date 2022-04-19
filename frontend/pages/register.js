@@ -62,7 +62,7 @@ export default function Register() {
       {error ? <Error error={error} /> : ""}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label for="exampleInputName1" className="form-label">
+          <label htmlFor="exampleInputName1" className="form-label">
             Ім'я
           </label>
           <input
@@ -75,7 +75,7 @@ export default function Register() {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Пошта
           </label>
           <input
@@ -88,7 +88,7 @@ export default function Register() {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Пароль
           </label>
           <input
@@ -100,7 +100,7 @@ export default function Register() {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputPhone1" className="form-label">
+          <label htmlFor="exampleInputPhone1" className="form-label">
             Мобільний номер телефону
           </label>
           <input

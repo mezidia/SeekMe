@@ -18,7 +18,7 @@ export default function Search() {
 
   useEffect(() => {
     getPosts();
-  }, [text]);
+  });
 
   return posts.length ? (
     <>
