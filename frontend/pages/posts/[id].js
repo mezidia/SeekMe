@@ -108,7 +108,8 @@ export default function Post({ post }) {
       const data = await response.json();
       setError(data.detail);
     } else {
-      router.push("/");
+      setIsUpdating(false);
+      router.push("/posts/[id]", `/posts/${post.id}`);
     }
   };
 
@@ -190,7 +191,7 @@ export default function Post({ post }) {
         />
       )}
       {token && isAuthor ? (
-        <>
+        <div>
           <button
             type="button"
             className="btn btn-danger"
@@ -205,7 +206,7 @@ export default function Post({ post }) {
           >
             {isUpdating ? "Зберегти" : "Оновити"}
           </button>
-        </>
+        </div>
       ) : null}
     </>
   );
