@@ -7,9 +7,7 @@ export default function MainPage() {
         <div className="col-lg-6 col-md-8 mx-auto">
           <h1 className="fw-light">ЗнайдиМене</h1>
           <p className="lead text-muted">
-            Something short and leading about the collection below—its contents,
-            the creator, etc. Make it short and sweet, but not too short so
-            folks don’t simply skip over it entirely.
+            Онлайн-сервіс, який допоможе Вам знайти своїх друзів та рідних.
           </p>
           <p>
             <Link href="/register">
