@@ -53,7 +53,7 @@ export default function Login() {
             required
           />
           <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+            Ваша адреса не буде поширюватись третім особам.
           </div>
         </div>
         <div className="mb-3">
