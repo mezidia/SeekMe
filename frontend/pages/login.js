@@ -36,7 +36,18 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Вхід</title>
+        <meta name="title" content="Увійти до кабінету" key="title" />
+        <meta
+          name="description"
+          content="Увійти до кабінету на порталі ЗнайдиМене."
+          key="description"
+        />
+        <meta
+          name="keywords"
+          content="вхід, логін, кабінет, автентифікація, увійти до кабінету, увійти на ЗнайдиМене"
+          key="keywords"
+        />
+        <title>Увійти до кабінету</title>
       </Head>
       {error ? <Error error={error} /> : ""}
       <form onSubmit={handleSubmit}>

@@ -9,8 +9,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export function reportWebVitals(metric) {
-  console.table(metric);
-}
-
 export default MyApp;

@@ -23,7 +23,18 @@ export default function Search() {
   return posts.length ? (
     <>
       <Head>
-        <title>Пошук постів</title>
+        <title>Пошук об'яв</title>
+        <meta name="title" content="Пошук об'яв" key="title" />
+        <meta
+          name="description"
+          content="Пошук об'яв на ЗнайдиМене."
+          key="description"
+        />
+        <meta
+          name="keywords"
+          content="пошук, пошук об'яв, пошук об'яв про зниклих людей, результат пошуку, пошук на ЗнайдиМене, пошук зниклих людей на ЗнайдиМене"
+          key="keywords"
+        />
       </Head>
       <PostList posts={posts} />
     </>
@@ -31,8 +42,19 @@ export default function Search() {
     <>
       <Head>
         <title>Помилка пошуку</title>
+        <meta name="title" content="Помилка пошуку" key="title" />
+        <meta
+          name="description"
+          content="Невдалий пошук об'яв на ЗнайдиМене."
+          key="description"
+        />
+        <meta
+          name="keywords"
+          content="невдалий пошук, немає результату, невдалий пошук на ЗнайдиМене, немає об'яв на ЗнайдиМене"
+          key="keywords"
+        />
       </Head>
-      <Error error={`No posts with query: ${text}`} />
+      <Error error={`На жаль, немає об'яв із таким запитом: ${text}`} />
     </>
   );
 }

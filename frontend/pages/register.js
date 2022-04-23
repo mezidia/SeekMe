@@ -57,7 +57,18 @@ export default function Register() {
   return (
     <>
       <Head>
-        <title>Реєстрація</title>
+        <title>Створення кабінету</title>
+        <meta name="title" content="ЗнайдиМене" key="title" />
+        <meta
+          name="description"
+          content="Створення кабінету для подачі об'яв."
+          key="description"
+        />
+        <meta
+          name="keywords"
+          content="кабінет, створення кабінету, створення кабінету на ЗнайдиМене, реєстрація, створення акаунту"
+          key="keywords"
+        />
       </Head>
       {error ? <Error error={error} /> : ""}
       <form onSubmit={handleSubmit}>

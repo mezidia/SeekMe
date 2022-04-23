@@ -11,16 +11,14 @@ export default function Layout({ children }) {
           content="initial-scale=1.0, width=device-width"
           key="viewport"
         />
-        <meta name="title" content="ЗнайдиМене" key="title" />
+        <meta name="title" content="ЗнайдиМене" />
         <meta
           name="description"
           content="Онлайн-сервіс, який допоможе Вам знайти своїх друзів та рідних."
-          key="description"
         />
         <meta
           name="keywords"
           content="знайти рідних, пошук рідних, пошук друзів, оголошення про родичів, оголошення про зниклих"
-          key="keywords"
         />
         <meta name="robots" content="index, follow" key="robots" />
         <meta charset="UTF-8" key="charset" />

@@ -155,6 +155,17 @@ export default function Post({ post }) {
     <>
       <Head>
         <title>{post.full_name}</title>
+        <meta name="title" content={`Об'яв ${post.full_name}`} key="title" />
+        <meta
+          name="description"
+          content={`Об'ява ${post.full_name} на ЗнайдиМене`}
+          key="description"
+        />
+        <meta
+          name="keywords"
+          content={`${post.full_name}, ${post.last_place}, ${post.description}, ЗнайдиМене`}
+          key="keywords"
+        />
       </Head>
       {error ? <Error error={error} /> : null}
       {!isUpdating ? (

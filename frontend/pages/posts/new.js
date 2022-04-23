@@ -103,7 +103,18 @@ export default function NewPost() {
   return (
     <>
       <Head>
-        <title>Створити пост</title>
+        <title>Створити об'яву</title>
+        <meta name="title" content="Створити об'яву" key="title" />
+        <meta
+          name="description"
+          content="Створити об'яву про знайдену людину."
+          key="description"
+        />
+        <meta
+          name="keywords"
+          content="створення, створити об'яву, створити об'яву про людину, створити об'яву на ЗнайдиМене, створити об'яву на сайті ЗнайдиМене"
+          key="keywords"
+        />
       </Head>
       {error ? <Error error={error} /> : null}
       <form onSubmit={handleSubmit}>
