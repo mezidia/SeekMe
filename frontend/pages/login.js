@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Link from "next/link";
 
 import Error from "../components/Error";
 
@@ -76,11 +77,24 @@ export default function Login() {
             className="form-control"
             id="exampleInputPassword1"
             ref={passwordRef}
+            aria-describedby="forgotPassword"
             required
           />
+          <Link href="/">
+            <a id="forgotPassword" title="Натисніть, щоб відновити">
+              Забули пароль?
+            </a>
+          </Link>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Увійти
+        <div className="md-3">
+          <Link href="/register">
+            <a id="forgotPassword" title="Натисніть, щоб зареєструватись">
+              Немає акаунту? Створіть кабінет тут
+            </a>
+          </Link>
+        </div>
+        <button type="submit" className="btn btn-primary btn-lg mt-3">
+          Увійти до кабінету
         </button>
       </form>
     </>

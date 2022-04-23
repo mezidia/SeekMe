@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Link from "next/link";
 
 import Error from "../components/Error";
 
@@ -122,7 +123,14 @@ export default function Register() {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <div className="md-3">
+          <Link href="/login">
+            <a id="forgotPassword" title="Натисніть, щоб увійти ">
+              Вже маєте кабінет? Увійдіть тут
+            </a>
+          </Link>
+        </div>
+        <button type="submit" className="btn btn-primary btn-lg mt-3">
           Зареєструватись
         </button>
       </form>
