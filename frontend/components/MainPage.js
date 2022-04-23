@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Form from "./SearchForm";
 
 export default function MainPage() {
   return (
@@ -10,14 +10,7 @@ export default function MainPage() {
             Онлайн-сервіс, який допоможе Вам знайти своїх друзів та рідних.
           </p>
           <p>
-            <Link href="/register">
-              <a className="btn btn-primary btn-lg my-2 me-2">
-                Зареєструватись
-              </a>
-            </Link>
-            <Link href="/login">
-              <a className="btn btn-secondary btn-lg my-2">Увійти</a>
-            </Link>
+            <Form />
           </p>
         </div>
       </div>

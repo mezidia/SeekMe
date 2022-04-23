@@ -16,7 +16,7 @@ export default function Form() {
       <input
         className="form-control me-2"
         type="search"
-        placeholder="Знайти пости"
+        placeholder="Напишіть ім'я людини, місце або опис"
         aria-label="Search"
         ref={searchRef}
       />
