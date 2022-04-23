@@ -6,6 +6,7 @@ import checkUser from "../utils/checkUser";
 export default function UserHeader({ setToken }) {
   const router = useRouter();
   const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -17,6 +18,7 @@ export default function UserHeader({ setToken }) {
     const user = await checkUser();
     if (user) {
       setUserName(user.name);
+      setUserId(user.id);
     } else {
       localStorage.removeItem("token");
     }
@@ -35,6 +37,13 @@ export default function UserHeader({ setToken }) {
         <Link href="/posts/new">
           <a className="btn btn-outline-success" role="button">
             Створити пост
+          </a>
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link href={`/user/${userId}`}>
+          <a className="btn btn-outline-primary ms-2" role="button">
+            Мої об'яви
           </a>
         </Link>
       </li>
