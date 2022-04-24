@@ -8,7 +8,7 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const search = searchRef.current.value;
-    router.push(`/search?search=${search}`);
+    router.push(`/posts/search/${search}`);
   };
 
   return (

@@ -1,25 +1,9 @@
-import { useRouter } from "next/router";
 import Head from "next/head";
-import { useEffect, useState } from "react";
 
-import Error from "../components/Error";
-import PostList from "../components/PostList";
+import Error from "../../../components/Error";
+import PostList from "../../../components/PostList";
 
-export default function Search() {
-  const router = useRouter();
-  const [posts, setPosts] = useState([]);
-  const text = router.query.search;
-
-  const getPosts = async () => {
-    const response = await fetch(`http://127.0.0.1:8000/posts/search/${text}`);
-    const posts = await response.json();
-    setPosts(posts);
-  };
-
-  useEffect(() => {
-    getPosts();
-  }, [text]);
-
+export default function Search({ posts, query }) {
   return posts.length ? (
     <>
       <Head>
@@ -36,7 +20,7 @@ export default function Search() {
           key="keywords"
         />
       </Head>
-      <PostList posts={posts} />
+      <PostList posts={posts} key={query} />
     </>
   ) : (
     <>
@@ -54,7 +38,18 @@ export default function Search() {
           key="keywords"
         />
       </Head>
-      <Error error={`На жаль, немає об'яв із таким запитом: ${text}`} />
+      <Error error={`На жаль, немає об'яв із таким запитом: ${query}`} />
     </>
   );
+}
+
+export async function getServerSideProps({ params: { query } }) {
+  const response = await fetch(`http://127.0.0.1:8000/posts/search/${query}`);
+  const posts = await response.json();
+  return {
+    props: {
+      posts,
+      query,
+    },
+  };
 }
