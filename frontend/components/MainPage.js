@@ -9,9 +9,9 @@ export default function MainPage() {
           <p className="lead text-muted">
             Онлайн-сервіс, який допоможе Вам знайти своїх друзів та рідних.
           </p>
-          <p>
+          <span>
             <Form />
-          </p>
+          </span>
         </div>
       </div>
     </section>
