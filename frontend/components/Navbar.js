@@ -43,7 +43,7 @@ export default function Navbar() {
           </ul>
           <>
             <Link href="/posts">
-              <a className="nav-link">Усі пости</a>
+              <a className="nav-link">Усі об'яви</a>
             </Link>
             <Form />
           </>
