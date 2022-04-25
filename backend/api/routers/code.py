@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from database import get_db
 from crud import code_crud
+from oauth2 import create_access_token
 import schemas
 
 router = APIRouter(prefix="/recover", tags=["recover"])
@@ -28,7 +29,7 @@ def generate_code(db: Session = Depends(get_db)):
     return code_crud.create_code(code=code, db=db)
 
 
-@router.post("/check", status_code=status.HTTP_200_OK, response_model=schemas.CodeData)
+@router.post("/check", status_code=status.HTTP_200_OK, response_model=schemas.Token)
 def check_code(code: int, db: Session = Depends(get_db)):
     """
     generate_code generates random code and store him in the database.
@@ -37,4 +38,8 @@ def check_code(code: int, db: Session = Depends(get_db)):
     :param db: database session.
     :return: post info.
     """
-    return code_crud.check_code(code=code, db=db)
+    if code_crud.check_code(code=code, db=db):
+        access_token = create_access_token(data={"sub": str(code)})
+        return {"access_token": access_token, "token_type": "bearer"}
+    else:
+        return None
