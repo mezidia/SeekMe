@@ -74,7 +74,18 @@ export default function Recover() {
   return (
     <>
       <Head>
-        <title>Recover</title>
+        <title>Відновлення паролю</title>
+        <meta name="title" content="Відновлення паролю" key="title" />
+        <meta
+          name="description"
+          content="Відновлення паролю на сайті ЗнайдиМене."
+          key="description"
+        />
+        <meta
+          name="keywords"
+          content="відновлення паролю, відновлення паролю на ЗнайдиМене, забули пароль, забули пароль на ЗнайдиМене, відновити кабінет"
+          key="keywords"
+        />
       </Head>
       {success ? (
         <div className="alert alert-success mt-2" role="alert">
