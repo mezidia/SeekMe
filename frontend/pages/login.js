@@ -80,7 +80,7 @@ export default function Login() {
             aria-describedby="forgotPassword"
             required
           />
-          <Link href="/">
+          <Link href="/user/recover">
             <a id="forgotPassword" title="Натисніть, щоб відновити">
               Забули пароль?
             </a>
