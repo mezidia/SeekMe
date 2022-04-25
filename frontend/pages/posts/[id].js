@@ -171,10 +171,10 @@ export default function Post({ post }) {
       {!isUpdating ? (
         <>
           <h1>
-            Ім'я посту: <u>{post.full_name}</u>
+            Заголовок об'яви: <u>{post.full_name}</u>
           </h1>
           <h2>Останнє місце: {post.last_place}</h2>
-          <h2>Опис: {post.description}</h2>
+          <h2>Опис об'яви: {post.description}</h2>
           {photoUrl ? (
             <img
               src={photoUrl}
@@ -188,7 +188,7 @@ export default function Post({ post }) {
           )}
           <h2>
             <Link href={`/user/${post.owner_id}`}>
-              <a>Сторінка автора</a>
+              <a>Сторінка автора об'яви</a>
             </Link>
           </h2>
         </>
