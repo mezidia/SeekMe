@@ -36,7 +36,7 @@ def check_code(code: int, db: Session) -> models.Code:
     return db_code.first()
 
 
-def delete_code(id: id, db: Session) -> None:
+def delete_code(code: int, db: Session) -> None:
     """
     delete_post removes post from database by his id.
 
@@ -45,9 +45,9 @@ def delete_code(id: id, db: Session) -> None:
     :return: None.
     """
 
-    db_post = db.query(models.Post).filter(models.Post.id == id)
+    db_code = db.query(models.Code).filter(models.Code.code == code)
 
-    db_post.delete(synchronize_session=False)
+    db_code.delete(synchronize_session=False)
     db.commit()
 
 
