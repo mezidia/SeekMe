@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 
 from database import get_db
+from utils import email as email_utils
 from crud import code_crud, user_crud
 from oauth2 import create_access_token, get_current_user
 import schemas
@@ -23,7 +24,7 @@ def generate_code(email: str, db: Session = Depends(get_db)):
         import random
 
         code = random.randint(100000, 999999)
-
+        email_utils.send_email(email, str(code))
         return code_crud.create_code(code=code, db=db)
     raise HTTPException(status_code=404, detail="Користувача з такою поштою немає")
 
