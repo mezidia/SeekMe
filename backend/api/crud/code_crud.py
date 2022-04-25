@@ -1,19 +1,6 @@
-from sqlalchemy.orm import Session, Query
+from sqlalchemy.orm import Session
 
-import models, schemas
-
-from typing import List
-
-
-def get_all_codes(db: Session) -> List:
-    """
-    get_all_posts takes all posts from database.
-
-    :param db: database session.
-    :return: results represented by session query as a list.
-    """
-
-    return db.query(models.Post).all()
+import models
 
 
 def create_code(code: int, db: Session) -> models.Code:
@@ -32,6 +19,20 @@ def create_code(code: int, db: Session) -> models.Code:
     db.refresh(db_code)
 
     return db_code
+
+
+def check_code(code: int, db: Session) -> models.Code:
+    """
+    check_code checks code in database.
+
+    :param code: code to check.
+    :param db: database session.
+    :return: code object.
+    """
+
+    db_code = db.query(models.Code).filter(models.Code.code == code)
+
+    return db_code.first()
 
 
 def delete_code(id: id, db: Session) -> None:
