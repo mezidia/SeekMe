@@ -14,7 +14,7 @@ router = APIRouter(prefix="/recover", tags=["recover"])
 
 
 @router.post("", status_code=status.HTTP_200_OK, response_model=schemas.CodeData)
-def generate_code(db: Session = Depends(get_db)):
+def generate_code(email: str, db: Session = Depends(get_db)):
     """
     generate_code generates random code and store him in the database.
 
