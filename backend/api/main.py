@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import engine
-from routers import user, post, auth
+from routers import user, post, password, auth
 import models
 
 
@@ -30,6 +30,7 @@ async def db_set_up():
 app.include_router(user.router)
 app.include_router(post.router)
 app.include_router(auth.router)
+app.include_router(password.router)
 
 
 if __name__ == "__main__":
