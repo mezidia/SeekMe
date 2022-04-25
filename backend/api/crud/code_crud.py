@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 
+from hashing import Hash
 import models
 
 
@@ -47,4 +48,27 @@ def delete_code(id: id, db: Session) -> None:
     db_post = db.query(models.Post).filter(models.Post.id == id)
 
     db_post.delete(synchronize_session=False)
+    db.commit()
+
+
+def update_user(email: str, password: str, db: Session) -> None:
+    """
+    update_user updates user value fields in database by his id.
+
+    :param id: id of user to update.
+    :param user: pydantic base user schema.
+    :param db: database session.
+    :return: None.
+    """
+
+    db_user = db.query(models.User).filter(models.User.email == email)
+
+    hashed_pwd = Hash.bcrypt(password)
+
+    db_user.update(
+        {
+            "password": hashed_pwd,
+        },
+        synchronize_session=False,
+    )
     db.commit()
