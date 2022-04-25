@@ -25,7 +25,7 @@ export default function Home({ user }) {
       </Head>
       <div>
         <h1>
-          Усі пости від користувача: <u>{user.name}</u>
+          Користувач: <u>{user.name}</u>
         </h1>
         <h2>
           Електронний адрес:{" "}
@@ -34,7 +34,7 @@ export default function Home({ user }) {
           </a>
         </h2>
         <h2>Телефон - {user.phone_number}</h2>
-        <h3>Усі пости:</h3>
+        <h3>Усі об'яви:</h3>
         <PostList posts={user.posts} />
       </div>
     </>

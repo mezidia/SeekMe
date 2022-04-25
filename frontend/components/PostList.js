@@ -51,7 +51,7 @@ export default function PostList({ posts }) {
           ) : null}
         </span>
       </p>
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 pt-2">
+      <div className="list-group list-group-flush">
         {paginatedPosts.map((post) => (
           <PostListElement post={post} key={post.id} />
         ))}
