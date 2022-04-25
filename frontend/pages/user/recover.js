@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import Head from "next/head";
+import Link from "next/link";
 
 import Error from "../../components/Error";
 
@@ -64,15 +66,22 @@ export default function Recover() {
     if (!response.ok) {
       setError(data.detail);
     } else {
+      setError(null);
       setSuccess(true);
     }
   };
 
   return (
     <>
+      <Head>
+        <title>Recover</title>
+      </Head>
       {success ? (
         <div className="alert alert-success mt-2" role="alert">
-          Nice
+          Ваш пароль успішно змінено! Увійдіть за допомогою нього{" "}
+          <Link href="/login">
+            <a>тут</a>
+          </Link>
         </div>
       ) : null}
       {error ? <Error error={error} /> : ""}
