@@ -28,3 +28,10 @@ class User(Base):
     phone_number = Column(String, nullable=False)
 
     posts = relationship("Post", back_populates="creator")
+
+
+class Code(Base):
+    __tablename__ = "codes"
+
+    id = Column(Integer, primary_key=True, nullable=False, index=True)
+    code = Column(Integer, nullable=False)

@@ -50,4 +50,8 @@ class TokenData(BaseModel):
 
 
 class CodeData(BaseModel):
+    id: int
     code: int
+
+    class Config:
+        orm_mode = True

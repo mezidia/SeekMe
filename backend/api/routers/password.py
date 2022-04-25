@@ -6,6 +6,7 @@ from fastapi import (
 from sqlalchemy.orm import Session
 
 from database import get_db
+from crud import code_crud
 import schemas
 
 router = APIRouter(prefix="/recover", tags=["recover"])
@@ -24,4 +25,4 @@ def generate_code(db: Session = Depends(get_db)):
 
     code = random.randint(100000, 999999)
 
-    return {"code": code}
+    return code_crud.create_code(code=code, db=db)
