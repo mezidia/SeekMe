@@ -6,9 +6,11 @@ export default function MainPage() {
       <div className="row py-lg-5">
         <div className="col-lg-6 col-md-8 mx-auto">
           <h1 className="fw-light">ЗнайдиМене</h1>
-          <p className="lead text-muted">
+          <h3 className="lead text-muted">
             Онлайн-сервіс, який допоможе Вам знайти своїх друзів та рідних.
-          </p>
+            Введіть інформацію та починайте пошук. Створюйте власні об'яви за
+            допомогою кнопки в меню.
+          </h3>
           <span>
             <Form />
           </span>
