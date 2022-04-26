@@ -12,19 +12,16 @@ export default function Form() {
   };
 
   return (
-    <form className="d-flex">
+    <form className="d-flex" onSubmit={handleSubmit}>
       <input
         className="form-control me-2"
         type="search"
         placeholder="Напишіть ім'я людини, місце або опис"
         aria-label="Search"
+        required
         ref={searchRef}
       />
-      <button
-        className="btn btn-outline-success"
-        onClick={handleSubmit}
-        type="submit"
-      >
+      <button className="btn btn-outline-success" type="submit">
         Знайти
       </button>
     </form>
