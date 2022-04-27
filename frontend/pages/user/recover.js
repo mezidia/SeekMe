@@ -97,6 +97,9 @@ export default function Recover() {
       ) : null}
       {error ? <Error error={error} /> : ""}
       <form>
+        <h1 className="text-center">
+          Відновіть пароль за допомогою електронної пошти
+        </h1>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1">Введіть вашу пошту</label>
           <input

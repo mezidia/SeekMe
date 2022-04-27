@@ -73,6 +73,7 @@ export default function Register() {
       </Head>
       {error ? <Error error={error} /> : ""}
       <form onSubmit={handleSubmit}>
+        <h1 className="text-center">Створіть власний кабінет</h1>
         <div className="mb-3">
           <label htmlFor="exampleInputName1" className="form-label">
             Ім'я

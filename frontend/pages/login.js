@@ -52,6 +52,7 @@ export default function Login() {
       </Head>
       {error ? <Error error={error} /> : ""}
       <form onSubmit={handleSubmit}>
+        <h1 className="text-center">Увійдіть до кабінету</h1>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Електронна пошта
