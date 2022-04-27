@@ -31,7 +31,7 @@ export default function UserHeader({ setToken }) {
   return (
     <>
       <li className="nav-item">
-        <span className="nav-link fw-bold">Hello, {userName}</span>
+        <span className="nav-link fw-bold">Здраствуйте, {userName}</span>
       </li>
       <li className="nav-item">
         <Link href="/posts/new">
