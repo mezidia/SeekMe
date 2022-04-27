@@ -135,13 +135,13 @@ export default function NewPost() {
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPlace" className="form-label">
-            Місце проживання
+            Останнє місце перебування
           </label>
           <input
             type="text"
             className="form-control"
             id="exampleInputPlace"
-            placeholder="Місце проживання"
+            placeholder="Останнє місце перебування"
             ref={placeRef}
             required
             disabled={isAuthorized ? false : true}
