@@ -23,7 +23,7 @@ export default function EditPost({
       </div>
       <div className="mb-3">
         <label htmlFor="exampleInputPlace" className="form-label">
-          Місце проживання
+          Останнє місце перебування
         </label>
         <input
           type="text"
