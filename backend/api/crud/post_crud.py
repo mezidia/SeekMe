@@ -32,16 +32,26 @@ def get_posts_by_query(q: str, db: Session) -> List:
 
     for post in posts:
         for desperate_q in desperate_qs:
+            print(post.id, desperate_q)
             massivchik = 0
-            if (desperate_q in post.full_name):
-                massivchik += len(desperate_q) / len(post.full_name)
-            if (desperate_q in post.last_place):
-                massivchik += len(desperate_q) / len(post.last_place)
-            if (desperate_q in post.description):
-                massivchik += len(desperate_q) / len(post.description)
+            if desperate_q.lower() in post.full_name.lower():
+                print("Нашел по имени")
+                massivchik += 1
+            if desperate_q.lower() in post.last_place.lower():
+                print("Нашел по месту")
+                massivchik += 1
+            if desperate_q.lower() in post.description.lower():
+                print("Нашел по описанию")
+                massivchik += 1
             if massivchik != 0:
-                post.percentage = massivchik
-                queried_posts.append(post)
+                if post not in queried_posts:
+                    print("Добавил в массив")
+                    post.percentage = massivchik
+                    queried_posts.append(post)
+                elif post in queried_posts:
+                    print("Уже есть в массиве")
+                    index = queried_posts.index(post)
+                    queried_posts[index].percentage += massivchik
 
     queried_posts.sort(key=lambda x: x.percentage, reverse=True)
 
