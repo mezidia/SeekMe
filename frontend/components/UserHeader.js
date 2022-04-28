@@ -36,7 +36,7 @@ export default function UserHeader({ setToken }) {
       <li className="nav-item">
         <Link href="/posts/new">
           <a className="btn btn-outline-success" role="button">
-            Створити пост
+            Створити об'яву
           </a>
         </Link>
       </li>
