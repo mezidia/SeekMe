@@ -132,7 +132,7 @@ export default function Register() {
           </Link>
         </div>
         <button type="submit" className="btn btn-primary btn-lg mt-3">
-          Зареєструватись
+          Створити кабінет
         </button>
       </form>
     </>
