@@ -2,14 +2,12 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    # database_hostname: str
-    # database_username: str
-    # database_password: str
-    # database_name: str
     secret_key: str
     algorithm: str
     access_token_expire_minutes: int
     gmail_password: str
+    host_for_api: str
+    alternative_host_for_api: str
 
     class Config:
         env_file = "../.env"
