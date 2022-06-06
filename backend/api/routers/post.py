@@ -25,7 +25,9 @@ def get_post(id: int, db: Session = Depends(get_db)):
     :param db: database session.
     :return: post info.
     """
+
     post = post_crud.get_post_by_id(id, db)
+
     if post is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -43,6 +45,7 @@ def get_posts(db: Session = Depends(get_db)):
     :param db: database session.
     :return: all posts.
     """
+
     posts = post_crud.get_all_posts(db)
 
     return posts
@@ -58,6 +61,7 @@ def get_posts(query: str, db: Session = Depends(get_db)):
     :param db: database session.
     :return: all posts.
     """
+
     posts = post_crud.get_posts_by_query(query, db)
 
     return posts
@@ -78,6 +82,7 @@ def create_post(
     :param current_user: current user
     :return: created post.
     """
+
     return post_crud.create_post(current_user.id, post, db)
 
 
@@ -97,12 +102,15 @@ def update_post(
     :param current_user: current user
     :return: updated post.
     """
+
     db_post = post_crud.get_post_by_id(id, db)
+
     if current_user.id != db_post.owner_id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=f"This operation is not allowed without log in",
         )
+        
     post_crud.update_post(id, post, db)
 
     return {"detail": f"post with id {id} was updated"}
@@ -122,12 +130,15 @@ def delete_post(
     :param current_user: current user
     :return: status code.
     """
+
     db_post = post_crud.get_post_by_id(id, db)
+
     if current_user.id != db_post.owner_id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=f"This operation is not allowed without log in",
         )
+
     post_crud.delete_post(id, db)
 
     return {"detail": f"post with id {id} was deleted"}

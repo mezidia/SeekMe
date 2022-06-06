@@ -1,3 +1,5 @@
+import random
+
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 
@@ -19,13 +21,15 @@ def generate_code(email: str, db: Session = Depends(get_db)):
     :param db: database session.
     :return: post info.
     """
-    user = user_crud.get_user_by_email(email, db)
-    if user:
-        import random
 
+    user = user_crud.get_user_by_email(email, db)
+
+    if user:
         code = random.randint(100000, 999999)
         email_utils.send_email(email, str(code))
+
         return code_crud.create_code(code=code, db=db)
+
     raise HTTPException(status_code=404, detail="Користувача з такою поштою немає")
 
 
@@ -38,9 +42,11 @@ def check_code(code: int, db: Session = Depends(get_db)):
     :param db: database session.
     :return: post info.
     """
+
     if code_crud.check_code(code=code, db=db):
         code_crud.delete_code(code=code, db=db)
         access_token = create_access_token(data={"sub": str(code)})
+
         return {"access_token": access_token, "token_type": "bearer"}
     else:
         raise HTTPException(status_code=404, detail="Код невірний")
@@ -60,4 +66,5 @@ def update_user(
     :param db: database session.
     :return: post info.
     """
+    
     code_crud.update_user(email, password, db)

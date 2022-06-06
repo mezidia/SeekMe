@@ -18,6 +18,7 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
     :param current_user: current user
     :return: current user.
     """
+
     return current_user
 
 
@@ -30,7 +31,9 @@ def get_user(id: int, db: Session = Depends(get_db)):
     :param db: database session.
     :return: user.
     """
+
     user = user_crud.get_user_by_id(id, db)
+
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -42,12 +45,14 @@ def get_user(id: int, db: Session = Depends(get_db)):
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=List[schemas.User])
 def get_users(db: Session = Depends(get_db)):
+
     """
     get_users gets all users via user_crud.
 
     :param db: database session.
     :return: all users.
     """
+
     users = user_crud.get_all_users(db)
 
     return users
@@ -64,7 +69,9 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     :param db: database session.
     :return: created user.
     """
+
     db_user = user_crud.get_user_by_email(user.email, db)
+
     if db_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered"
@@ -89,11 +96,13 @@ def update_user(
     :param current_user: current user
     :return: status code.
     """
+
     if current_user.id != id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=f"This operation is not allowed without log in",
         )
+
     user_crud.update_user(id, user, db)
 
     return {"detail": f"user with id {id} was updated"}
@@ -113,11 +122,13 @@ def delete_user(
     :param current_user: current user
     :return: status code.
     """
+
     if current_user.id != id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=f"This operation is not allowed without log in",
         )
+
     user_crud.delete_user(id, db)
 
     return {"detail": f"user with id {id} was deleted"}
