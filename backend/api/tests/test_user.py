@@ -5,6 +5,23 @@ from fastapi import status
 from api.main import app
 from api.config import settings
 
+
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
+
+@pytest.mark.anyio
+async def test_me_route():
+    async with AsyncClient(app=app, base_url=settings.alternative_host_for_api) as ac:
+        data = {
+            "username": "test",
+            "password": "test",
+        }
+        response = await ac.post("/login", headers=headers, json=data)
+        
+    assert response.status_code == status.HTTP_200_OK
+
 @pytest.mark.anyio
 async def test_users_route():
     async with AsyncClient(app=app, base_url=settings.alternative_host_for_api) as ac:
@@ -15,10 +32,6 @@ async def test_users_route():
 @pytest.mark.anyio
 async def test_create_route():
     async with AsyncClient(app=app, base_url=settings.alternative_host_for_api) as ac:
-        headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
         data = {
             "name": "test",
             "email": "test",
