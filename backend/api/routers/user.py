@@ -11,7 +11,7 @@ from typing import List
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("/me", response_model=schemas.User)
+@router.get("/me/", response_model=schemas.User)
 async def read_users_me(current_user: schemas.User = Depends(get_current_user)) -> dict:
     """
     read_users_me reads current user.
