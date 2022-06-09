@@ -25,7 +25,7 @@ app.add_middleware(
 
 
 @app.get("/", status_code=status.HTTP_200_OK)
-def main():
+async def main() -> dict:
     """
     main prints info about documentation
 
@@ -35,7 +35,7 @@ def main():
     return {"detail": "To see documentation go to the /docs route."}
 
 @app.on_event("startup")
-async def db_set_up():
+async def db_set_up() -> None:
     models.Base.metadata.create_all(engine)
 
 

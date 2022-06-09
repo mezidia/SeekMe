@@ -17,7 +17,7 @@ router = APIRouter(prefix="/posts", tags=["posts"])
 
 
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.Post)
-def get_post(id: int, db: Session = Depends(get_db)):
+async def get_post(id: int, db: Session = Depends(get_db)) -> dict:
     """
     get_post_by_id takes the post via post_crud by its id.
 
@@ -38,7 +38,7 @@ def get_post(id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=List[schemas.Post])
-def get_posts(db: Session = Depends(get_db)):
+async def get_posts(db: Session = Depends(get_db)) -> list[dict]:
     """
     get_posts takes all posts via post_crud.
 
@@ -54,7 +54,7 @@ def get_posts(db: Session = Depends(get_db)):
 @router.get(
     "/search/{query}", status_code=status.HTTP_200_OK, response_model=List[schemas.Post]
 )
-def get_posts(query: str, db: Session = Depends(get_db)):
+async def get_posts(query: str, db: Session = Depends(get_db)) -> list[dict]:
     """
     get_posts takes all posts via post_crud.
 
@@ -70,11 +70,11 @@ def get_posts(query: str, db: Session = Depends(get_db)):
 @router.post(
     "/create/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post
 )
-def create_post(
+async def create_post(
     post: schemas.PostCreate,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(get_current_user),
-):
+) -> dict:
     """
     create_post creates the post via post_crud.
     :param post: template for post data.
@@ -87,12 +87,12 @@ def create_post(
 
 
 @router.put("/update/{id}", status_code=status.HTTP_200_OK)
-def update_post(
+async def update_post(
     id: int,
     post: schemas.PostBase,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(get_current_user),
-):
+) -> dict:
     """
     update_post updates the post via post_crud.
 
@@ -117,11 +117,11 @@ def update_post(
 
 
 @router.delete("/delete/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_post(
+async def delete_post(
     id: int,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(get_current_user),
-):
+) -> dict:
     """
     delete_post deletes the post via post_crud.
 

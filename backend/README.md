@@ -1,5 +1,5 @@
 <h1 align="center">❄️ SeekMe API ❄️</h2>
-<p align="center">API for SeekMe website</p>]
+<p align="center">API for SeekMe website</p>
 
 <p align="center"><b>About SeekMe:</b></p>
 <p align="center">SeekMe is a website where you can find your loved ones with whom you may have lost contact due to the war.</p>

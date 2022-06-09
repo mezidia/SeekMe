@@ -12,7 +12,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("/me", response_model=schemas.User)
-async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
+async def read_users_me(current_user: schemas.User = Depends(get_current_user)) -> dict:
     """
     read_users_me reads current user.
     :param current_user: current user
@@ -23,7 +23,7 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
 
 
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.User)
-def get_user(id: int, db: Session = Depends(get_db)):
+async def get_user(id: int, db: Session = Depends(get_db)) -> dict:
     """
     get_user gets the user by id via user_crud.
 
@@ -44,7 +44,7 @@ def get_user(id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=List[schemas.User])
-def get_users(db: Session = Depends(get_db)):
+async def get_users(db: Session = Depends(get_db)) -> list[dict]:
 
     """
     get_users gets all users via user_crud.
@@ -61,7 +61,7 @@ def get_users(db: Session = Depends(get_db)):
 @router.post(
     "/create/", status_code=status.HTTP_201_CREATED, response_model=schemas.User
 )
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)) -> dict:
     """
     create_user creates the user via user_crud.
 
@@ -81,12 +81,12 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 
 @router.put("/update/{id}", status_code=status.HTTP_200_OK)
-def update_user(
+async def update_user(
     id: int,
     user: schemas.UserBase,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(get_current_user),
-):
+) -> dict:
     """
     update_user updates the user by id via user_crud.
 
@@ -109,11 +109,11 @@ def update_user(
 
 
 @router.delete("/delete/{id}", status_code=status.HTTP_404_NOT_FOUND)
-def delete_user(
+async def delete_user(
     id: int,
     db: Session = Depends(get_db),
     current_user: schemas.User = Depends(get_current_user),
-):
+) -> dict:
     """
     delete_user deltes the user by id via user_crud.
 

@@ -13,7 +13,7 @@ router = APIRouter(prefix="/recover", tags=["recover"])
 
 
 @router.post("", status_code=status.HTTP_200_OK, response_model=schemas.CodeData)
-def generate_code(email: str, db: Session = Depends(get_db)):
+async def generate_code(email: str, db: Session = Depends(get_db)):
     """
     generate_code generates random code and store him in the database.
 
@@ -34,7 +34,7 @@ def generate_code(email: str, db: Session = Depends(get_db)):
 
 
 @router.post("/check", status_code=status.HTTP_200_OK, response_model=schemas.Token)
-def check_code(code: int, db: Session = Depends(get_db)):
+async def check_code(code: int, db: Session = Depends(get_db)):
     """
     generate_code generates random code and store him in the database.
 
@@ -53,7 +53,7 @@ def check_code(code: int, db: Session = Depends(get_db)):
 
 
 @router.post("/update", status_code=status.HTTP_200_OK, response_model=schemas.Token)
-def update_user(
+async def update_user(
     email: str,
     password: str,
     db: Session = Depends(get_db),
