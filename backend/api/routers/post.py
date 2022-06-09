@@ -6,10 +6,10 @@ from fastapi import (
 )
 from sqlalchemy.orm import Session
 
-from database import get_db
-from crud import post_crud
-from oauth2 import get_current_user
-import schemas
+from api.database import get_db
+from api.crud import post_crud
+from api.oauth2 import get_current_user
+from api import schemas
 
 from typing import List
 

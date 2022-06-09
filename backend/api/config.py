@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     alternative_host_for_api: str
 
     class Config:
-        env_file = "../.env"
+        env_file = ".env"
 
 
 settings = Settings()

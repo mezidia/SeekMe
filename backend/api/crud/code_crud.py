@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from hashing import Hash
-import models
+from api.hashing import Hash
+from api import models
 
 
 def create_code(code: int, db: Session) -> models.Code:

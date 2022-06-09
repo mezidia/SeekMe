@@ -1,6 +1,6 @@
 import smtplib
 
-from config import settings
+from api.config import settings
 
 
 def send_email(reciever: str, code: str):

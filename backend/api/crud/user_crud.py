@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session, Query
 
-from hashing import Hash
-import models, schemas
+from api.hashing import Hash
+from api import models, schemas
 
 from typing import List
 

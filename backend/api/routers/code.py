@@ -3,11 +3,11 @@ import random
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 
-from database import get_db
-from utils import email as email_utils
-from crud import code_crud, user_crud
-from oauth2 import create_access_token, get_current_user
-import schemas
+from api.database import get_db
+from api.utils import email as email_utils
+from api.crud import code_crud, user_crud
+from api.oauth2 import create_access_token, get_current_user
+from api import schemas
 
 router = APIRouter(prefix="/recover", tags=["recover"])
 

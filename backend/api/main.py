@@ -2,10 +2,10 @@ import uvicorn
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
-import models
-from database import engine
-from routers import user, post, code, auth
-from config import settings
+from .import models
+from .database import engine
+from .routers import user, post, code, auth
+from .config import settings
 
 
 app = FastAPI()

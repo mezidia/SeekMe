@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, Query
 
-import models, schemas
+from api import models, schemas
 
 from typing import List
 
