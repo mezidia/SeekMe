@@ -66,5 +66,5 @@ async def update_user(
     :param db: database session.
     :return: post info.
     """
-    
+
     code_crud.update_user(email, password, db)

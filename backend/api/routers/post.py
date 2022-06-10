@@ -110,7 +110,7 @@ async def update_post(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=f"This operation is not allowed without log in",
         )
-        
+
     post_crud.update_post(id, post, db)
 
     return {"detail": f"post with id {id} was updated"}

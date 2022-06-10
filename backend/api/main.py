@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
-from .import models
+from . import models
 from .database import engine
 from .routers import user, post, code, auth
 from .config import settings
@@ -33,6 +33,7 @@ async def main() -> dict:
     """
 
     return {"detail": "To see documentation go to the /docs route."}
+
 
 @app.on_event("startup")
 async def db_set_up() -> None:

@@ -12,4 +12,5 @@ def get_token() -> str:
     access_token = token_response.json()["access_token"]
     return access_token
 
+
 access_token = get_token()
