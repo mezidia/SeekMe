@@ -64,7 +64,9 @@ async def test_create_route():
         )
         await ac.delete(
             f"/users/delete/{create_user_response.json()['id']}",
-            headers={"Authorization": f"Bearer {login_user_response.json()['access_token']}"},
+            headers={
+                "Authorization": f"Bearer {login_user_response.json()['access_token']}"
+            },
         )
 
     assert create_user_response.status_code == status.HTTP_201_CREATED
@@ -93,10 +95,10 @@ async def test_update_route():
             headers={
                 "Authorization": f"Bearer {login_user_response.json()['access_token']}"
             },
-            json=updated_info
+            json=updated_info,
         )
         get_user_by_id_response = await ac.get(
-            f"/users/{create_user_response.json()['id']}", 
+            f"/users/{create_user_response.json()['id']}",
             headers={
                 "Authorization": f"Bearer {login_user_response.json()['access_token']}"
             },
@@ -110,3 +112,32 @@ async def test_update_route():
 
     assert update_user_response.status_code == status.HTTP_200_OK
     assert get_user_by_id_response.json()["email"] == updated_info["email"]
+    assert (
+        update_user_response.json()["detail"]
+        == f"user with id {create_user_response.json()['id']} was updated"
+    )
+
+
+@pytest.mark.anyio
+async def test_delete_route():
+    async with AsyncClient(app=app, base_url=settings.alternative_host_for_api) as ac:
+        create_user_response = await ac.post(url="/users/create/", json=user_for_tests)
+        login_user_response = await ac.post(
+            "/login",
+            data={
+                "username": user_for_tests["email"],
+                "password": user_for_tests["password"],
+            },
+        )
+        delete_user_response = await ac.delete(
+            f"/users/delete/{create_user_response.json()['id']}",
+            headers={
+                "Authorization": f"Bearer {login_user_response.json()['access_token']}"
+            },
+        )
+
+    assert delete_user_response.status_code == status.HTTP_404_NOT_FOUND
+    assert (
+        delete_user_response.json()["detail"]
+        == f"user with id {create_user_response.json()['id']} was deleted"
+    )
