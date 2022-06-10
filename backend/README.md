@@ -9,6 +9,7 @@
 <br>
 <h2 align="center">❄️ Information ❄️</h2>
 <p align="center">- Code is <a href="https://github.com/mezidia/SeekMe/tree/main/backend/api">here</a> -</p>
+<p align="center">- Tests is <a href="https://github.com/mezidia/SeekMe/tree/main/backend/api/tests">here</a> -</p>
 <p align="center">- Here is  <a href="https://github.com/mezidia/SeekMe/blob/main/backend/requirements.txt">requirements</a> file -</p>
 
 <br>
