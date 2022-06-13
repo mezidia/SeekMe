@@ -6,6 +6,7 @@ from api.main import app
 from api.config import settings
 from .token import access_token
 
+
 post_for_tests = {
     "full_name": "something",
     "last_place": "something",
@@ -47,15 +48,11 @@ async def test_create_route():
         create_post_response = await ac.post(
             url="/posts/create/",
             json=post_for_tests,
-            headers={
-                "Authorization": f"Bearer {access_token}"
-            },
+            headers={"Authorization": f"Bearer {access_token}"},
         )
         await ac.delete(
             f"/posts/delete/{create_post_response.json()['id']}",
-            headers={
-                "Authorization": f"Bearer {access_token}"
-            },
+            headers={"Authorization": f"Bearer {access_token}"},
         )
 
         expected_post = {
@@ -69,3 +66,37 @@ async def test_create_route():
 
     assert create_post_response.status_code == status.HTTP_201_CREATED
     assert create_post_response.json() == expected_post
+
+
+@pytest.mark.anyio
+async def test_update_route():
+    async with AsyncClient(app=app, base_url=settings.alternative_host_for_api) as ac:
+        create_post_response = await ac.post(
+            url="/posts/create/",
+            json=post_for_tests,
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+
+        updated_post = {
+            "full_name": "something",
+            "last_place": "something something",
+            "description": "something",
+            "image": "something",
+        }
+
+        update_post_response = await ac.put(
+            url=f"/posts/update/{create_post_response.json()['id']}",
+            json=updated_post,
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+
+        await ac.delete(
+            f"/posts/delete/{create_post_response.json()['id']}",
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+
+    assert update_post_response.status_code == status.HTTP_200_OK
+    assert (
+        update_post_response.json()["detail"]
+        == f"post with id {create_post_response.json()['id']} was updated"
+    )
