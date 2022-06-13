@@ -100,3 +100,23 @@ async def test_update_route():
         update_post_response.json()["detail"]
         == f"post with id {create_post_response.json()['id']} was updated"
     )
+
+
+@pytest.mark.anyio
+async def test_delete_route():
+    async with AsyncClient(app=app, base_url=settings.alternative_host_for_api) as ac:
+        create_post_response = await ac.post(
+            url="/posts/create/",
+            json=post_for_tests,
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+        delete_post_response = await ac.delete(
+            f"/posts/delete/{create_post_response.json()['id']}",
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+
+    assert delete_post_response.status_code == status.HTTP_204_NO_CONTENT
+    assert (
+        delete_post_response.json()["detail"]
+        == f"post with id {create_post_response.json()['id']} was deleted"
+    )
