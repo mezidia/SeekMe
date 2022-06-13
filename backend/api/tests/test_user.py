@@ -36,7 +36,16 @@ async def test_get_by_id_route():
         "email": "test",
         "phone_number": "test",
         "id": 1,
-        "posts": [],
+        "posts": [
+            {
+                "full_name": "test",
+                "last_place": "test",
+                "description": "test",
+                "image": "test",
+                "owner_id": 1,
+                "id": 1,
+            }
+        ],
     }
 
     assert response.status_code == status.HTTP_200_OK
